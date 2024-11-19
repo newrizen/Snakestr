@@ -22,8 +22,13 @@ export class SnakeGame {
     this.touchStartY = 0;
     this.addTouchListeners();
 
-    // Keyboard event handling
+    this.paddleWidth = 10;
+    this.paddleHeight = 100;
+    this.ballSize = 10;
+
+    // Keyboard controls
     window.addEventListener("keydown", this.handleKeydown.bind(this));
+    window.addEventListener("keyup", this.handleKeyup.bind(this));
   }
 
   addTouchListeners() {
@@ -101,223 +106,146 @@ export class SnakeGame {
     }
   }
 
+
+
+  
+
   reset() {
-    this.snake = [{ x: 10, y: 10 }];
-    this.direction = { x: 0, y: 0 };
-    this.lightning = this.getRandomPosition();
-    this.score = 0;
-    this.gameOver = false;
-    this.electrifiedUntil = 0;
-    this.directionQueue = []; // Reset direction queue
+    // Paddle positions
+    this.leftPaddle = { x: 0, y: this.canvas.height / 2 - this.paddleHeight / 2, dy: 0 };
+    this.rightPaddle = { x: this.canvas.width - this.paddleWidth, y: this.canvas.height / 2 - this.paddleHeight / 2, dy: 0 };
+
+    // Ball position and velocity
+    this.ball = {
+      x: this.canvas.width / 2,
+      y: this.canvas.height / 2,
+      dx: CONFIG.BALL_SPEED,
+      dy: CONFIG.BALL_SPEED,
+    };
+
+    // Scores
+    this.leftScore = 0;
+    this.rightScore = 0;
     this.isPaused = false;
   }
+
+  handleKeydown(event) {
+    switch (event.key) {
+      case "w":
+        this.leftPaddle.dy = -CONFIG.PADDLE_SPEED;
+        break;
+      case "s":
+        this.leftPaddle.dy = CONFIG.PADDLE_SPEED;
+        break;
+      case "ArrowUp":
+        this.rightPaddle.dy = -CONFIG.PADDLE_SPEED;
+        break;
+      case "ArrowDown":
+        this.rightPaddle.dy = CONFIG.PADDLE_SPEED;
+        break;
+    }
+  }
+
+  handleKeyup(event) {
+    switch (event.key) {
+      case "w":
+      case "s":
+        this.leftPaddle.dy = 0;
+        break;
+      case "ArrowUp":
+      case "ArrowDown":
+        this.rightPaddle.dy = 0;
+        break;
+    }
+  }
+
   start() {
     this.reset();
     this.gameLoop();
   }
 
-  gameLoop(currentTime) {
-    try {
-      if (this.gameOver) {
-        this.onGameOver(this.score);
-        return;
-      }
+  gameLoop(currentTime = 0) {
+    this.gameLoopId = window.requestAnimationFrame(this.gameLoop.bind(this));
 
-      this.gameLoopId = window.requestAnimationFrame(this.gameLoop.bind(this));
+    if (this.isPaused) return;
 
-      if (this.isPaused) {
-        return; // Don't update game state if paused
-      }
+    const secondsSinceLastRender = (currentTime - this.lastRenderTime) / 1000;
+    if (secondsSinceLastRender < 1 / CONFIG.TICK_RATE) return;
 
-      const secondsSinceLastRender = (currentTime - this.lastRenderTime) / 1000;
-      if (secondsSinceLastRender < 1 / CONFIG.TICK_RATE) return;
+    this.lastRenderTime = currentTime;
 
-      this.lastRenderTime = currentTime;
-
-      this.update();
-      this.draw();
-    } catch (error) {
-      console.error("Error in game loop:", error);
-      this.gameOver = true;
-    }
+    this.update();
+    this.draw();
   }
 
   update() {
-    // Apply the next direction if it's set
-    if (this.nextDirection.x !== 0 || this.nextDirection.y !== 0) {
-      this.direction = this.nextDirection;
-      this.lastDirection = this.direction;
-      this.nextDirection = { x: 0, y: 0 };
-    } else if (this.directionQueue.length > 0) {
-      // If no immediate direction, check the queue
-      const nextDir = this.directionQueue.shift();
-      if (this.isValidDirectionChange(this.lastDirection, nextDir)) {
-        this.direction = nextDir;
-        this.lastDirection = this.direction;
-      }
+    // Update paddle positions
+    this.leftPaddle.y += this.leftPaddle.dy;
+    this.rightPaddle.y += this.rightPaddle.dy;
+
+    // Prevent paddles from moving out of bounds
+    this.leftPaddle.y = Math.max(0, Math.min(this.canvas.height - this.paddleHeight, this.leftPaddle.y));
+    this.rightPaddle.y = Math.max(0, Math.min(this.canvas.height - this.paddleHeight, this.rightPaddle.y));
+
+    // Update ball position
+    this.ball.x += this.ball.dx;
+    this.ball.y += this.ball.dy;
+
+    // Ball collision with top and bottom walls
+    if (this.ball.y <= 0 || this.ball.y + this.ballSize >= this.canvas.height) {
+      this.ball.dy *= -1;
     }
 
-    const head = {
-      x: this.wrapCoordinate(this.snake[0].x + this.direction.x),
-      y: this.wrapCoordinate(this.snake[0].y + this.direction.y),
-    };
-
-    // Check for collision before adding the new head
-    if (this.checkCollision(head)) {
-      this.gameOver = true;
-      return;
+    // Ball collision with paddles
+    if (
+      this.ball.x <= this.leftPaddle.x + this.paddleWidth &&
+      this.ball.y + this.ballSize >= this.leftPaddle.y &&
+      this.ball.y <= this.leftPaddle.y + this.paddleHeight
+    ) {
+      this.ball.dx *= -1;
     }
 
-    // Add the new head to the snake
-    this.snake.unshift(head);
+    if (
+      this.ball.x + this.ballSize >= this.rightPaddle.x &&
+      this.ball.y + this.ballSize >= this.rightPaddle.y &&
+      this.ball.y <= this.rightPaddle.y + this.paddleHeight
+    ) {
+      this.ball.dx *= -1;
+    }
 
-    // Check if the snake has eaten the food
-    if (head.x === this.lightning.x && head.y === this.lightning.y) {
-      // Increase score and generate new food
-      this.score++;
-      this.updateScoreDisplay();
-      this.lightning = this.getRandomPosition();
-      this.onScoreUpdate(this.score);
-      this.electrifiedUntil = Date.now() + CONFIG.ELECTRIFIED_DURATION;
-      // Don't remove the tail when food is eaten
-    } else {
-      // Remove the tail if no food was eaten
-      this.snake.pop();
+    // Check if a point is scored
+    if (this.ball.x <= 0) {
+      this.rightScore++;
+      this.resetBall();
+    }
+
+    if (this.ball.x + this.ballSize >= this.canvas.width) {
+      this.leftScore++;
+      this.resetBall();
     }
   }
 
   draw() {
+    // Clear the canvas
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-    const isElectrified = Date.now() < this.electrifiedUntil;
+    // Draw paddles
+    this.ctx.fillStyle = "white";
+    this.ctx.fillRect(this.leftPaddle.x, this.leftPaddle.y, this.paddleWidth, this.paddleHeight);
+    this.ctx.fillRect(this.rightPaddle.x, this.rightPaddle.y, this.paddleWidth, this.paddleHeight);
 
-    // Draw snake
-    this.snake.forEach((segment, index) => {
-      this.ctx.font = `${this.cellSize * 0.8}px Arial`;
-      this.ctx.textAlign = "center";
-      this.ctx.textBaseline = "middle";
+    // Draw ball
+    this.ctx.fillRect(this.ball.x, this.ball.y, this.ballSize, this.ballSize);
 
-      let emoji;
-      if (index === 0) {
-        emoji = CONFIG.DEFAULT_EMOJI;
-      } else if (isElectrified && index % 2 === 0) {
-        emoji = CONFIG.ELECTRIFIED_EMOJI;
-      } else {
-        emoji = "🟩";
-      }
-
-      this.ctx.fillText(
-        emoji,
-        segment.x * this.cellSize + this.cellSize / 2,
-        segment.y * this.cellSize + this.cellSize / 2
-      );
-    });
-
-    // Draw lightning
-    this.ctx.fillText(
-      CONFIG.LIGHTNING_EMOJI,
-      this.lightning.x * this.cellSize + this.cellSize / 2,
-      this.lightning.y * this.cellSize + this.cellSize / 2
-    );
+    // Draw scores
+    this.ctx.font = "20px Arial";
+    this.ctx.fillText(`Left: ${this.leftScore}`, 10, 20);
+    this.ctx.fillText(`Right: ${this.rightScore}`, this.canvas.width - 100, 20);
   }
 
-  wrapCoordinate(coord) {
-    return (coord + CONFIG.GAME_SIZE) % CONFIG.GAME_SIZE;
-  }
-
-  checkCollision(head) {
-    return this.snake
-      .slice(1)
-      .some(
-        (segment) =>
-          this.wrapCoordinate(segment.x) === head.x &&
-          this.wrapCoordinate(segment.y) === head.y
-      );
-  }
-
-  getRandomPosition() {
-    let newPosition;
-    do {
-      newPosition = {
-        x: Math.floor(Math.random() * CONFIG.GAME_SIZE),
-        y: Math.floor(Math.random() * CONFIG.GAME_SIZE),
-      };
-    } while (this.isPositionOccupied(newPosition));
-    return newPosition;
-  }
-
-  isPositionOccupied(position) {
-    return this.snake.some(
-      (segment) => segment.x === position.x && segment.y === position.y
-    );
-  }
-
-  changeDirection(newDirection) {
-    const directionMap = {
-      ArrowUp: { x: 0, y: -1 },
-      ArrowDown: { x: 0, y: 1 },
-      ArrowLeft: { x: -1, y: 0 },
-      ArrowRight: { x: 1, y: 0 },
-    };
-
-    if (directionMap[newDirection]) {
-      const proposedDirection = directionMap[newDirection];
-      if (this.isValidDirectionChange(this.lastDirection, proposedDirection)) {
-        // If it's a valid change from the last direction, apply it immediately
-        this.nextDirection = proposedDirection;
-      } else if (this.directionQueue.length === 0) {
-        // If it's not valid now, but the queue is empty, queue it for the next update
-        this.directionQueue.push(proposedDirection);
-      }
-      // If neither condition is met, ignore the input (prevents queue flooding)
-    }
-  }
-
-  isValidDirectionChange(currentDir, newDir) {
-    return (
-      (currentDir.x + newDir.x !== 0 || currentDir.y + newDir.y !== 0) &&
-      (newDir.x !== 0 || newDir.y !== 0)
-    );
-  }
-
-  togglePause() {
-    this.isPaused = !this.isPaused;
-    if (this.isPaused) {
-      this.pauseMenu.style.display = "flex";
-    } else {
-      this.pauseMenu.style.display = "none";
-    }
-  }
-
-  resumeGame() {
-    if (this.isPaused) {
-      this.togglePause();
-    }
-  }
-
-  restartGame() {
-    this.reset();
-    this.resumeGame();
-  }
-
-  navigateToHighscores() {
-    this.isPaused = false;
-    this.gameOver = true;
-    window.location.href = "highscores.html";
-  }
-
-  updateScoreDisplay() {
-    // This method should be implemented to update the score display in your UI
-    console.log(`Score: ${this.score}`);
-  }
-
-  onGameOver(score) {
-    // This method can be overridden from outside to handle game over events
-    console.log(`Game Over. Final Score: ${score}`);
-  }
-
-  onScoreUpdate(score) {
-    // This method can be overridden from outside to handle score updates
-    console.log(`Score Updated: ${score}`);
+  resetBall() {
+    this.ball.x = this.canvas.width / 2;
+    this.ball.y = this.canvas.height / 2;
+    this.ball.dx *= -1;
   }
 }
