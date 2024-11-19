@@ -1,6 +1,6 @@
 export const CONFIG = {
   WEBSOCKET_URL: "wss://relay.damus.io",
-  GAME_SIZE: 40,
+  GAME_SIZE: 60,
   TICK_RATE: 15,
   //CANVAS_SIZE: 400,
   DEFAULT_EMOJI1: "🟪",
