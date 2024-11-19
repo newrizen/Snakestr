@@ -3,9 +3,11 @@ export const CONFIG = {
   GAME_SIZE: 40,
   TICK_RATE: 15,
   //CANVAS_SIZE: 400,
-  DEFAULT_EMOJI: "🐍",
-  LIGHTNING_EMOJI: "⚡",
-  UNLOCKABLE_EMOJIS: ["🌟", "🎉", "🔥", "💎", "🚀"],
+  DEFAULT_EMOJI1: "🟪",
+  DEFAULT_EMOJI2: "🟧",
+  BOMB_EMOJI: "💣",
+  UNLOCKABLE_EMOJIS1: ["🤬", "🔥", "😡", "🥷🏼", "👿"],
+  UNLOCKABLE_EMOJIS2: ["🌟", "🎉", "🔥", "💎", "🚀"],
   ELECTRIFIED_DURATION: 500, // Duration of electrified effect in milliseconds
   ELECTRIFIED_EMOJI: "⚡~⚡", // Emoji to represent electrified state
 
