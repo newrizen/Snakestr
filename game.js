@@ -230,7 +230,7 @@ export class SnakeGame {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
     // Define um fator de espaçamento
-    const spacingFactor = 1.1; // Aumente ou diminua para ajustar o espaçamento
+    const spacingFactor = 1.5; // Aumente ou diminua para ajustar o espaçamento
 
     
     // Draw left paddle as DEFAULT_EMOJI1
@@ -246,7 +246,7 @@ export class SnakeGame {
     for (let i = 0; i < this.paddleHeight / this.cellSize; i++) {
       this.ctx.fillText(
         CONFIG.DEFAULT_EMOJI2,
-        this.rightPaddle.x, // Align emoji properly
+        this.rightPaddle.x - 5, // Align emoji properly
         this.rightPaddle.y + i * this.cellSize + this.cellSize * spacingFactor
       );
     }
