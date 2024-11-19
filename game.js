@@ -5,7 +5,7 @@ export class SnakeGame {
     this.canvas = document.getElementById(canvasId);
     this.ctx = this.canvas.getContext("2d");
     this.canvas.width = CONFIG.CANVAS_SIZE;
-    this.canvas.height = CONFIG.CANVAS_SIZE - 200;
+    this.canvas.height = CONFIG.CANVAS_SIZE;
     this.cellSize = CONFIG.CANVAS_SIZE / CONFIG.GAME_SIZE;
     this.reset();
     this.lastRenderTime = 0;
