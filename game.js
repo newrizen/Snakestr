@@ -229,13 +229,30 @@ export class SnakeGame {
     // Clear the canvas
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-    // Draw paddles
-    this.ctx.fillStyle = "white";
-    this.ctx.fillRect(this.leftPaddle.x, this.leftPaddle.y, this.paddleWidth, this.paddleHeight);
-    this.ctx.fillRect(this.rightPaddle.x, this.rightPaddle.y, this.paddleWidth, this.paddleHeight);
+    // Draw left paddle as DEFAULT_EMOJI1
+    for (let i = 0; i < this.paddleHeight / this.cellSize; i++) {
+      this.ctx.fillText(
+        CONFIG.DEFAULT_EMOJI1,
+        this.leftPaddle.x,
+        this.leftPaddle.y + i * this.cellSize
+      );
+    }
 
-    // Draw ball
-    this.ctx.fillRect(this.ball.x, this.ball.y, this.ballSize, this.ballSize);
+    // Draw right paddle as DEFAULT_EMOJI2
+    for (let i = 0; i < this.paddleHeight / this.cellSize; i++) {
+      this.ctx.fillText(
+        CONFIG.DEFAULT_EMOJI2,
+        this.rightPaddle.x - this.cellSize, // Align emoji properly
+        this.rightPaddle.y + i * this.cellSize
+      );
+    }
+
+    // Draw ball as BOMB_EMOJI
+    this.ctx.fillText(
+      CONFIG.BOMB_EMOJI,
+      this.ball.x,
+      this.ball.y
+    );
 
     // Draw scores
     this.ctx.font = "20px Arial";
