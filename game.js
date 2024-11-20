@@ -4,7 +4,7 @@ export class SnakeGame {
   constructor(canvasId) {
     this.canvas = document.getElementById(canvasId);
     this.ctx = this.canvas.getContext("2d");
-    this.canvas.width = CONFIG.CANVAS_SIZE;
+    this.canvas.width = CONFIG.CANVAS_SIZE * 1.5;
     this.canvas.height = CONFIG.CANVAS_SIZE;
     this.cellSize = CONFIG.CANVAS_SIZE / CONFIG.GAME_SIZE;
     this.reset();
@@ -234,7 +234,7 @@ export class SnakeGame {
 
     
     // Draw left paddle as DEFAULT_EMOJI1
-    for (let i = 0; i < this.paddleHeight / this.ballSize; i++) { // 100/ (600/60 * 2)
+    for (let i = 0; i < this.paddleHeight / (this.ballSize + 2); i++) { // 100/ (600/60 * 2)
       this.ctx.fillText(
         CONFIG.DEFAULT_EMOJI1,
         this.leftPaddle.x,
@@ -243,7 +243,7 @@ export class SnakeGame {
     }
 
     // Draw right paddle as DEFAULT_EMOJI2
-    for (let i = 0; i < this.paddleHeight / this.ballSize; i++) {
+    for (let i = 0; i < this.paddleHeight / (this.ballSize + 2); i++) {
       this.ctx.fillText(
         CONFIG.DEFAULT_EMOJI2,
         this.rightPaddle.x - 5, // Align emoji properly
