@@ -6,6 +6,7 @@ export const CONFIG = {
   DEFAULT_EMOJI1: "🟪",
   DEFAULT_EMOJI2: "🟧",
   BOMB_EMOJI: "💣",
+  EXPLOSION_EMOJI: "💥",
   UNLOCKABLE_EMOJIS1: ["🤬", "🔥", "😡", "🥷🏼", "👿"],
   UNLOCKABLE_EMOJIS2: ["🌟", "🎉", "🔥", "💎", "🚀"],
   ELECTRIFIED_DURATION: 500, // Duration of electrified effect in milliseconds
