@@ -22,9 +22,9 @@ export class SnakeGame {
     this.touchStartY = 0;
     this.addTouchListeners();
 
-    this.paddleWidth = (CONFIG.CANVAS_SIZE / CONFIG.GAME_SIZE) * 2; //20
-    this.paddleHeight =  (CONFIG.CANVAS_SIZE / CONFIG.GAME_SIZE) * 10; //100
-    this.ballSize = (CONFIG.CANVAS_SIZE / CONFIG.GAME_SIZE) * 2 - (CONFIG.CANVAS_SIZE / CONFIG.GAME_SIZE) / 5; //18
+    this.paddleWidth = 20; //20
+    this.paddleHeight =  100; //100
+    this.ballSize = 18; //18
 
     // Keyboard controls
     window.addEventListener("keydown", this.handleKeydown.bind(this));
