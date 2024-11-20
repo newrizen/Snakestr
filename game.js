@@ -24,7 +24,7 @@ export class SnakeGame {
 
     this.paddleWidth = (CONFIG.CANVAS_SIZE / CONFIG.GAME_SIZE) * 2; //20
     this.paddleHeight =  (CONFIG.CANVAS_SIZE / CONFIG.GAME_SIZE) * 10; //100
-    this.ballSize = (CONFIG.CANVAS_SIZE / CONFIG.GAME_SIZE) * 2; //20
+    this.ballSize = (CONFIG.CANVAS_SIZE / CONFIG.GAME_SIZE) * 2 - (CONFIG.CANVAS_SIZE / CONFIG.GAME_SIZE) / 5; //18
 
     // Keyboard controls
     window.addEventListener("keydown", this.handleKeydown.bind(this));
@@ -247,15 +247,15 @@ export class SnakeGame {
       this.ctx.fillText(
         CONFIG.DEFAULT_EMOJI2,
         this.rightPaddle.x - 5, // Align emoji properly
-        this.rightPaddle.y + (this.ballSize + 2) * i + this.ballSize - 7 // spacingFactor
+        this.rightPaddle.y + (this.ballSize + 2) * i + this.ballSize // spacingFactor
       );
     }
 
     // Draw ball as BOMB_EMOJI
     this.ctx.fillText(
       CONFIG.BOMB_EMOJI,
-      this.ball.x,
-      this.ball.y + this.ballSize / spacingFactor + 5
+      this.ball.x + 2,
+      this.ball.y + this.ballSize / 2 + 6
     );
 
     // Draw scores
