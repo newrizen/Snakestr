@@ -247,7 +247,7 @@ export class SnakeGame {
       this.ctx.fillText(
         CONFIG.DEFAULT_EMOJI2,
         this.rightPaddle.x - 5, // Align emoji properly
-        this.rightPaddle.y - 2 + (2 + this.ballSize + 2) * (i + 1) - 2 // spacingFactor
+        this.rightPaddle.y + (3 + this.ballSize + 3) * (i + 1) // spacingFactor
       );
     }
 
@@ -259,6 +259,12 @@ export class SnakeGame {
       this.ctx.translate(this.ball.x + this.ballSize / 2, 0); // Translate to ball's position
       this.ctx.scale(-1, 1); // Flip horizontally
       this.ctx.translate(-(this.ball.x + this.ballSize / 2), 0); // Restore translation
+    }
+
+    if (this.ball.dy > 0) {
+      this.ctx.translate(this.ball.y + this.ballSize / 2, 0); // Translate to ball's position
+      this.ctx.scale(-1, 1); // Flip vertically
+      this.ctx.translate(-(this.ball.y + this.ballSize / 2), 0); // Restore translation
     }
 
     // Draw ball as BOMB_EMOJI
