@@ -23,7 +23,7 @@ export class SnakeGame {
     this.addTouchListeners();
 
     this.paddleWidth = 20; //20
-    this.paddleHeight =  100; //100
+    this.paddleHeight =  110; //100
     this.ballSize = 18; //18
 
     // Keyboard controls
@@ -238,7 +238,7 @@ export class SnakeGame {
       this.ctx.fillText(
         CONFIG.DEFAULT_EMOJI1,
         this.leftPaddle.x,
-        this.leftPaddle.y + (this.ballSize + 5) * i + this.ballSize/2 // spacingFactor
+        this.leftPaddle.y + (this.ballSize + 4) * i + this.ballSize/2 // spacingFactor
       );
     }
 
@@ -247,7 +247,7 @@ export class SnakeGame {
       this.ctx.fillText(
         CONFIG.DEFAULT_EMOJI2,
         this.rightPaddle.x - 5, // Align emoji properly
-        this.rightPaddle.y + (this.ballSize + 4) * i + this.ballSize/2 + 2  // spacingFactor
+        this.rightPaddle.y + (this.ballSize + 4) * i + this.ballSize/2  // spacingFactor
       );
     }
 
