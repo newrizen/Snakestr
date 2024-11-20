@@ -234,7 +234,7 @@ export class SnakeGame {
 
     
     // Draw left paddle as DEFAULT_EMOJI1
-    for (let i = 0; i < this.paddleHeight * 2 / this.cellSize; i++) {
+    for (let i = 0; i < this.paddleHeight / (this.cellSize * 2); i++) { // 100/ (600/60)
       this.ctx.fillText(
         CONFIG.DEFAULT_EMOJI1,
         this.leftPaddle.x,
