@@ -247,14 +247,14 @@ export class SnakeGame {
       this.ctx.fillText(
         CONFIG.DEFAULT_EMOJI2,
         this.rightPaddle.x - 5, // Align emoji properly
-        this.rightPaddle.y + (this.ballSize + 2) * i + this.ballSize // spacingFactor
+        this.rightPaddle.y + (this.ballSize + 4) * i + this.ballSize + (this.ballSize / 2) // spacingFactor
       );
     }
 
     // Draw ball as BOMB_EMOJI
     this.ctx.fillText(
       CONFIG.BOMB_EMOJI,
-      this.ball.x + 2,
+      this.ball.x - 3,
       this.ball.y + this.ballSize / 2 + 6
     );
 
