@@ -243,11 +243,11 @@ export class SnakeGame {
     }
 
     // Draw right paddle as DEFAULT_EMOJI2
-    for (let i = 0; i < this.paddleHeight / (this.ballSize * 2); i++) {
+    for (let i = 0; i < this.paddleHeight / this.ballSize; i++) {
       this.ctx.fillText(
         CONFIG.DEFAULT_EMOJI2,
         this.rightPaddle.x - 5, // Align emoji properly
-        this.rightPaddle.y + (this.ballSize / spacingFactor + 5) * i // spacingFactor
+        this.rightPaddle.y + (this.ballSize / spacingFactor + 7) * i // spacingFactor
       );
     }
 
