@@ -58,8 +58,8 @@ export class SnakeGame {
   }
 
   startGame(menu) {
-    this.start();
     document.body.removeChild(menu); // Remove o menu da tela
+    this.start();
   }
 
   reset() {
