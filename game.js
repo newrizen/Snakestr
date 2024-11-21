@@ -59,7 +59,8 @@ export class SnakeGame {
 
   startGame(menu) {
     document.body.removeChild(menu); // Remove o menu da tela
-    this.start();
+    this.reset(); // Reinicia os estados do jogo
+    this.gameLoop(); // Inicia o loop do jogo
   }
 
   reset() {
@@ -112,7 +113,7 @@ export class SnakeGame {
     this.reset();
     // Exibe o menu inicial
     this.showMenu();
-    this.gameLoop();
+    //this.gameLoop();
   }
 
   gameLoop(currentTime = 0) {
