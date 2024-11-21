@@ -222,7 +222,8 @@ export class SnakeGame {
     if (this.ball.x + this.ballSize >= this.canvas.width) {
       this.leftScore++;
       this.resetBall();
-    }"
+    }
+  }
 
   draw() {
     // Clear the canvas
