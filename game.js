@@ -248,8 +248,8 @@ update() {
     // Draw lightning
     this.ctx.fillText(
       CONFIG.LIGHTNING_EMOJI,
-      this.lightning.x * this.peddleCellSize + this.peddleCellSize / 2,
-      this.lightning.y * this.peddleCellSize + this.peddleCellSize / 2
+      this.lightning.x * this.rightPaddle.x + this.rightPaddle.x / 2,
+      this.lightning.x * this.leftPaddle.x + this.leftPaddle.x / 2
     );
 
     // Draw ball as BOMB_EMOJI
