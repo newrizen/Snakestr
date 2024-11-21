@@ -178,9 +178,9 @@ update() {
     ) {
         this.ball.dx *= -1;
 
-      // Ativa o lightning no paddle esquerdo
-      this.leftPaddle.lightning = true;
-      setTimeout(() => this.leftPaddle.lightning = false, 2000); // Dura 2 segundos
+      // Ativa o electrified no paddle esquerdo
+      this.leftPaddle.electrified = true;
+      setTimeout(() => this.leftPaddle.electrified = false, 2000); // Dura 2 segundos
     }
 
     if (
@@ -190,9 +190,9 @@ update() {
     ) {
         this.ball.dx *= -1;
 
-      // Ativa o lightning no paddle direito
-      this.rightPaddle.lightning = true;
-      setTimeout(() => this.rightPaddle.lightning = false, 2000); // Dura 2 segundos
+      // Ativa o electrified no paddle direito
+      this.rightPaddle.electrified = true;
+      setTimeout(() => this.rightPaddle.electrified = false, 2000); // Dura 2 segundos
     }
 
     // Check if a point is scored
@@ -254,29 +254,29 @@ update() {
       this.ctx.translate(-(this.ball.x + this.ballSize / 2), 0); // Restaurar a posição
     }
 
-    // Desenha o paddle esquerdo com lightning
-    if (this.leftPaddle.lightning) {
+    // Desenha o paddle esquerdo com electrified
+    if (this.leftPaddle.electrified) {
       this.ctx.fillText(
-        CONFIG.LIGHTNING_EMOJI,
+        CONFIG.ELECTRIFIED_EMOJI,
         this.leftPaddle.x + this.paddleWidth / 2,
         this.leftPaddle.y - this.paddleHeight / 4 // Acima do paddle
       );
       this.ctx.fillText(
-        CONFIG.LIGHTNING_EMOJI,
+        CONFIG.ELECTRIFIED_EMOJI,
         this.leftPaddle.x + this.paddleWidth / 2,
         this.leftPaddle.y + this.paddleHeight + this.paddleHeight / 4 // Abaixo do paddle
       );
     }
   
-    // Desenha o paddle direito com lightning
-    if (this.rightPaddle.lightning) {
+    // Desenha o paddle direito com electrified
+    if (this.rightPaddle.electrified) {
       this.ctx.fillText(
-        CONFIG.LIGHTNING_EMOJI,
+        CONFIG.ELECTRIFIED_EMOJI,
         this.rightPaddle.x + this.paddleWidth / 2,
         this.rightPaddle.y - this.paddleHeight / 4 // Acima do paddle
       );
       this.ctx.fillText(
-        CONFIG.LIGHTNING_EMOJI,
+        CONFIG.ELECTRIFIED_EMOJI,
         this.rightPaddle.x + this.paddleWidth / 2,
         this.rightPaddle.y + this.paddleHeight + this.paddleHeight / 4 // Abaixo do paddle
       );
