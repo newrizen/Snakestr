@@ -11,156 +11,100 @@ export class SnakeGame {
     this.lastRenderTime = 0;
     this.gameLoopId = null;
     this.electrifiedUntil = 0;
-    this.directionQueue = []; // Queue to store direction changes
-    this.isPaused = false;
-    this.pauseMenu = document.getElementById("pause-menu");
-    this.lastDirection = { x: 0, y: 0 };
-    this.nextDirection = { x: 0, y: 0 };
     this.directionQueue = [];
-    // Touch event handling
-    this.touchStartX = 0;
-    this.touchStartY = 0;
+    this.isPaused = true; // Inicialmente pausado até o jogador escolher
+    this.selectedPaddle = null; // Guarda a escolha do jogador
     this.addTouchListeners();
 
-    this.paddleWidth = 20; //20
-    this.paddleHeight =  120; //100
-    this.ballSize = 18; //18
+    this.paddleWidth = 20;
+    this.paddleHeight = 120;
+    this.ballSize = 18;
 
-    // Keyboard controls
-    window.addEventListener("keydown", this.handleKeydown.bind(this));
-    window.addEventListener("keyup", this.handleKeyup.bind(this));
+    // Exibir menu de escolha
+    this.displayPaddleSelectionMenu();
   }
 
-  addTouchListeners() {
-    this.canvas.addEventListener(
-      "touchstart",
-      this.handleTouchStart.bind(this),
-      { passive: false }
-    );
-    this.canvas.addEventListener("touchmove", this.handleTouchMove.bind(this), {
-      passive: false,
+  displayPaddleSelectionMenu() {
+    const menu = document.createElement("div");
+    menu.id = "paddle-selection-menu";
+    menu.style.position = "absolute";
+    menu.style.top = "50%";
+    menu.style.left = "50%";
+    menu.style.transform = "translate(-50%, -50%)";
+    menu.style.padding = "20px";
+    menu.style.backgroundColor = "#333";
+    menu.style.color = "#fff";
+    menu.style.textAlign = "center";
+    menu.style.borderRadius = "10px";
+
+    const message = document.createElement("p");
+    message.textContent = "Escolha qual paddle você quer controlar:";
+    menu.appendChild(message);
+
+    const leftButton = document.createElement("button");
+    leftButton.textContent = "Esquerda (W/S)";
+    leftButton.style.margin = "10px";
+    leftButton.addEventListener("click", () => {
+      this.selectedPaddle = "left";
+      this.start();
+      document.body.removeChild(menu);
     });
-    this.canvas.addEventListener("touchend", this.handleTouchEnd.bind(this), {
-      passive: false,
+
+    const rightButton = document.createElement("button");
+    rightButton.textContent = "Direita (Setas)";
+    rightButton.style.margin = "10px";
+    rightButton.addEventListener("click", () => {
+      this.selectedPaddle = "right";
+      this.start();
+      document.body.removeChild(menu);
     });
-  }
 
-  handleTouchStart(event) {
-    event.preventDefault();
-    const touch = event.touches[0];
-    this.touchStartX = touch.clientX;
-    this.touchStartY = touch.clientY;
-  }
-
-  handleTouchMove(event) {
-    event.preventDefault();
-  }
-
-  handleTouchEnd(event) {
-    event.preventDefault();
-    if (!this.touchStartX || !this.touchStartY) {
-      return;
-    }
-
-    const touch = event.changedTouches[0];
-    const touchEndX = touch.clientX;
-    const touchEndY = touch.clientY;
-
-    const dx = touchEndX - this.touchStartX;
-    const dy = touchEndY - this.touchStartY;
-
-    // Minimum swipe distance to trigger direction change
-    const minSwipeDistance = 30;
-
-    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > minSwipeDistance) {
-      // Horizontal swipe
-      this.changeDirection(dx > 0 ? "ArrowRight" : "ArrowLeft");
-    } else if (Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > minSwipeDistance) {
-      // Vertical swipe
-      this.changeDirection(dy > 0 ? "ArrowDown" : "ArrowUp");
-    }
-
-    // Reset touch start coordinates
-    this.touchStartX = 0;
-    this.touchStartY = 0;
+    menu.appendChild(leftButton);
+    menu.appendChild(rightButton);
+    document.body.appendChild(menu);
   }
 
   handleKeydown(event) {
-    const key = event.key;
-    if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(key)) {
-      event.preventDefault();
-      this.changeDirection(key);
-    }
-  }
+    if (!this.selectedPaddle) return;
 
-  queueDirectionChange(newDirection) {
-    const directionMap = {
-      ArrowUp: { x: 0, y: -1 },
-      ArrowDown: { x: 0, y: 1 },
-      ArrowLeft: { x: -1, y: 0 },
-      ArrowRight: { x: 1, y: 0 },
-    };
-
-    if (directionMap[newDirection]) {
-      this.nextDirection = directionMap[newDirection];
-    }
-  }
-
-
-
-  
-
-  reset() {
-    // Paddle positions
-    this.leftPaddle = { x: 0, y: this.canvas.height / 2 - this.paddleHeight / 2, dy: 0 };
-    this.rightPaddle = { x: this.canvas.width - this.paddleWidth, y: this.canvas.height / 2 - this.paddleHeight / 2, dy: 0 };
-
-    // Ball position and velocity
-    this.ball = {
-      x: this.canvas.width / 2,
-      y: this.canvas.height / 2,
-      dx: CONFIG.BALL_SPEED,
-      dy: CONFIG.BALL_SPEED,
-    };
-
-    // Scores
-    this.leftScore = 0;
-    this.rightScore = 0;
-    this.isPaused = false;
-  }
-
-  handleKeydown(event) {
-    switch (event.key) {
-      case "w":
-        this.leftPaddle.dy = -CONFIG.PADDLE_SPEED;
-        break;
-      case "s":
-        this.leftPaddle.dy = CONFIG.PADDLE_SPEED;
-        break;
-      case "ArrowUp":
-        this.rightPaddle.dy = -CONFIG.PADDLE_SPEED;
-        break;
-      case "ArrowDown":
-        this.rightPaddle.dy = CONFIG.PADDLE_SPEED;
-        break;
+    if (this.selectedPaddle === "left") {
+      switch (event.key) {
+        case "w":
+          this.leftPaddle.dy = -CONFIG.PADDLE_SPEED;
+          break;
+        case "s":
+          this.leftPaddle.dy = CONFIG.PADDLE_SPEED;
+          break;
+      }
+    } else if (this.selectedPaddle === "right") {
+      switch (event.key) {
+        case "ArrowUp":
+          this.rightPaddle.dy = -CONFIG.PADDLE_SPEED;
+          break;
+        case "ArrowDown":
+          this.rightPaddle.dy = CONFIG.PADDLE_SPEED;
+          break;
+      }
     }
   }
 
   handleKeyup(event) {
-    switch (event.key) {
-      case "w":
-      case "s":
+    if (!this.selectedPaddle) return;
+
+    if (this.selectedPaddle === "left") {
+      if (event.key === "w" || event.key === "s") {
         this.leftPaddle.dy = 0;
-        break;
-      case "ArrowUp":
-      case "ArrowDown":
+      }
+    } else if (this.selectedPaddle === "right") {
+      if (event.key === "ArrowUp" || event.key === "ArrowDown") {
         this.rightPaddle.dy = 0;
-        break;
+      }
     }
   }
 
   start() {
     this.reset();
+    this.isPaused = false; // Liberar o jogo
     this.gameLoop();
   }
 
@@ -311,6 +255,11 @@ export class SnakeGame {
   updateScoreDisplay() {
     // This method should be implemented to update the score display in your UI
     console.log(`Score: ${this.rightScore}`);
+  }
+
+  onGameOver(score) {
+    // This method can be overridden from outside to handle game over events
+    console.log(`Game Over. Final Score: ${score}`);
   }
   
   onScoreUpdate(score) {
