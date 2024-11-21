@@ -7,110 +7,119 @@ export class SnakeGame {
     this.canvas.width = CONFIG.CANVAS_SIZE * 1.5;
     this.canvas.height = CONFIG.CANVAS_SIZE;
     this.cellSize = CONFIG.CANVAS_SIZE / CONFIG.GAME_SIZE;
+
+    // Escolha do jogador
+    this.playerSide = null; // "left" ou "right"
+
     this.reset();
     this.lastRenderTime = 0;
     this.gameLoopId = null;
     this.electrifiedUntil = 0;
     this.directionQueue = [];
-    this.isPaused = true; // Inicialmente pausado até o jogador escolher
-    this.selectedPaddle = null; // Guarda a escolha do jogador
-    this.addTouchListeners();
+    this.isPaused = false;
+    this.pauseMenu = document.getElementById("pause-menu");
 
     this.paddleWidth = 20;
     this.paddleHeight = 120;
     this.ballSize = 18;
 
-    // Exibir menu de escolha
-    this.displayPaddleSelectionMenu();
+    // Exibe o menu inicial
+    this.showMenu();
   }
 
-  displayPaddleSelectionMenu() {
+  showMenu() {
     const menu = document.createElement("div");
-    menu.id = "paddle-selection-menu";
+    menu.id = "game-menu";
     menu.style.position = "absolute";
     menu.style.top = "50%";
     menu.style.left = "50%";
     menu.style.transform = "translate(-50%, -50%)";
+    menu.style.backgroundColor = "#fff";
     menu.style.padding = "20px";
-    menu.style.backgroundColor = "#333";
-    menu.style.color = "#fff";
+    menu.style.border = "2px solid #000";
     menu.style.textAlign = "center";
-    menu.style.borderRadius = "10px";
 
-    const message = document.createElement("p");
-    message.textContent = "Escolha qual paddle você quer controlar:";
-    menu.appendChild(message);
+    const title = document.createElement("h2");
+    title.innerText = "Escolha o lado que você quer controlar";
+    menu.appendChild(title);
 
     const leftButton = document.createElement("button");
-    leftButton.textContent = "Esquerda (W/S)";
-    leftButton.style.margin = "10px";
-    leftButton.addEventListener("click", () => {
-      this.selectedPaddle = "left";
-      this.start();
-      document.body.removeChild(menu);
-    });
+    leftButton.innerText = "Controle o Paddle Esquerdo (W/S)";
+    leftButton.onclick = () => {
+      this.playerSide = "left";
+      this.startGame(menu);
+    };
 
     const rightButton = document.createElement("button");
-    rightButton.textContent = "Direita (Setas)";
-    rightButton.style.margin = "10px";
-    rightButton.addEventListener("click", () => {
-      this.selectedPaddle = "right";
-      this.start();
-      document.body.removeChild(menu);
-    });
+    rightButton.innerText = "Controle o Paddle Direito (↑/↓)";
+    rightButton.onclick = () => {
+      this.playerSide = "right";
+      this.startGame(menu);
+    };
 
     menu.appendChild(leftButton);
     menu.appendChild(rightButton);
+
     document.body.appendChild(menu);
   }
 
-  handleKeydown(event) {
-    if (!this.selectedPaddle) return;
+  startGame(menu) {
+    document.body.removeChild(menu); // Remove o menu da tela
+    this.start();
+  }
 
-    if (this.selectedPaddle === "left") {
-      switch (event.key) {
-        case "w":
-          this.leftPaddle.dy = -CONFIG.PADDLE_SPEED;
-          break;
-        case "s":
-          this.leftPaddle.dy = CONFIG.PADDLE_SPEED;
-          break;
-      }
-    } else if (this.selectedPaddle === "right") {
-      switch (event.key) {
-        case "ArrowUp":
-          this.rightPaddle.dy = -CONFIG.PADDLE_SPEED;
-          break;
-        case "ArrowDown":
-          this.rightPaddle.dy = CONFIG.PADDLE_SPEED;
-          break;
-      }
+  reset() {
+    this.leftPaddle = {
+      x: 0,
+      y: this.canvas.height / 2 - this.paddleHeight / 2,
+      dy: 0,
+    };
+    this.rightPaddle = {
+      x: this.canvas.width - this.paddleWidth,
+      y: this.canvas.height / 2 - this.paddleHeight / 2,
+      dy: 0,
+    };
+
+    this.ball = {
+      x: this.canvas.width / 2,
+      y: this.canvas.height / 2,
+      dx: CONFIG.BALL_SPEED,
+      dy: CONFIG.BALL_SPEED,
+    };
+
+    this.leftScore = 0;
+    this.rightScore = 0;
+    this.isPaused = false;
+
+    // Configura controles com base na escolha do jogador
+    window.addEventListener("keydown", (event) => this.handlePlayerControls(event));
+    window.addEventListener("keyup", (event) => this.stopPaddle(event));
+  }
+
+  handlePlayerControls(event) {
+    if (this.playerSide === "left") {
+      if (event.key === "w") this.leftPaddle.dy = -CONFIG.PADDLE_SPEED;
+      if (event.key === "s") this.leftPaddle.dy = CONFIG.PADDLE_SPEED;
+    } else if (this.playerSide === "right") {
+      if (event.key === "ArrowUp") this.rightPaddle.dy = -CONFIG.PADDLE_SPEED;
+      if (event.key === "ArrowDown") this.rightPaddle.dy = CONFIG.PADDLE_SPEED;
     }
   }
 
-  handleKeyup(event) {
-    if (!this.selectedPaddle) return;
-
-    if (this.selectedPaddle === "left") {
-      if (event.key === "w" || event.key === "s") {
-        this.leftPaddle.dy = 0;
-      }
-    } else if (this.selectedPaddle === "right") {
-      if (event.key === "ArrowUp" || event.key === "ArrowDown") {
-        this.rightPaddle.dy = 0;
-      }
+  stopPaddle(event) {
+    if (this.playerSide === "left" && (event.key === "w" || event.key === "s")) {
+      this.leftPaddle.dy = 0;
+    } else if (this.playerSide === "right" && (event.key === "ArrowUp" || event.key === "ArrowDown")) {
+      this.rightPaddle.dy = 0;
     }
   }
 
   start() {
-    this.reset();
-    this.isPaused = false; // Liberar o jogo
     this.gameLoop();
   }
 
   gameLoop(currentTime = 0) {
     this.gameLoopId = window.requestAnimationFrame(this.gameLoop.bind(this));
-
     if (this.isPaused) return;
 
     const secondsSinceLastRender = (currentTime - this.lastRenderTime) / 1000;
@@ -121,6 +130,7 @@ export class SnakeGame {
     this.update();
     this.draw();
   }
+
 
   update() {
     // Update paddle positions
