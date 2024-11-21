@@ -197,7 +197,34 @@ update() {
         this.leftScore++;
         this.resetBall();
     }
+
+    // Verifica se a bola toca o paddle esquerdo
+    if (
+      this.ball.x <= this.leftPaddle.x + this.paddleWidth &&
+      this.ball.y + this.ballSize >= this.leftPaddle.y &&
+      this.ball.y <= this.leftPaddle.y + this.paddleHeight
+    ) {
+      this.ball.dx *= -1;
+  
+      // Ativa o lightning no paddle esquerdo
+      this.leftPaddle.lightning = true;
+      setTimeout(() => this.leftPaddle.lightning = false, 2000); // Dura 2 segundos
+    }
+  
+    // Verifica se a bola toca o paddle direito
+    if (
+      this.ball.x + this.ballSize >= this.rightPaddle.x &&
+      this.ball.y + this.ballSize >= this.rightPaddle.y &&
+      this.ball.y <= this.rightPaddle.y + this.paddleHeight
+    ) {
+      this.ball.dx *= -1;
+  
+      // Ativa o lightning no paddle direito
+      this.rightPaddle.lightning = true;
+      setTimeout(() => this.rightPaddle.lightning = false, 2000); // Dura 2 segundos
+    }
 }
+  
   draw() {
     // Clear the canvas
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -245,12 +272,34 @@ update() {
       this.ctx.translate(-(this.ball.x + this.ballSize / 2), 0); // Restaurar a posição
     }
 
-    // Draw lightning
-    this.ctx.fillText(
-      CONFIG.LIGHTNING_EMOJI,
-      this.lightning.x * this.rightPaddle.x + this.rightPaddle.x / 2,
-      this.lightning.x * this.leftPaddle.x + this.leftPaddle.x / 2
-    );
+    // Desenha o paddle esquerdo com lightning
+    if (this.leftPaddle.lightning) {
+      this.ctx.fillText(
+        CONFIG.LIGHTNING_EMOJI,
+        this.leftPaddle.x + this.paddleWidth / 2,
+        this.leftPaddle.y - this.paddleHeight / 4 // Acima do paddle
+      );
+      this.ctx.fillText(
+        CONFIG.LIGHTNING_EMOJI,
+        this.leftPaddle.x + this.paddleWidth / 2,
+        this.leftPaddle.y + this.paddleHeight + this.paddleHeight / 4 // Abaixo do paddle
+      );
+    }
+  
+    // Desenha o paddle direito com lightning
+    if (this.rightPaddle.lightning) {
+      this.ctx.fillText(
+        CONFIG.LIGHTNING_EMOJI,
+        this.rightPaddle.x + this.paddleWidth / 2,
+        this.rightPaddle.y - this.paddleHeight / 4 // Acima do paddle
+      );
+      this.ctx.fillText(
+        CONFIG.LIGHTNING_EMOJI,
+        this.rightPaddle.x + this.paddleWidth / 2,
+        this.rightPaddle.y + this.paddleHeight + this.paddleHeight / 4 // Abaixo do paddle
+      );
+    }
+
 
     // Draw ball as BOMB_EMOJI
     this.ctx.fillText(
