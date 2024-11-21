@@ -244,6 +244,13 @@ update() {
       this.ctx.translate(-(this.ball.x + this.ballSize / 2), 0); // Restaurar a posição
     }
 
+    // Draw lightning
+    this.ctx.fillText(
+      CONFIG.LIGHTNING_EMOJI,
+      this.lightning.x * this.cellSize + this.cellSize / 2,
+      this.lightning.y * this.cellSize + this.cellSize / 2
+    );
+
     // Draw ball as BOMB_EMOJI
     this.ctx.fillText(
       CONFIG.BOMB_EMOJI,
