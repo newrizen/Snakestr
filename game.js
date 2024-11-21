@@ -58,6 +58,8 @@ export class SnakeGame {
   }
 
   startGame(menu) {
+    // Exibe o menu inicial
+    this.showMenu();
     document.body.removeChild(menu); // Remove o menu da tela
     this.start();
   }
@@ -110,8 +112,6 @@ export class SnakeGame {
 
   start() {
     this.reset();
-    // Exibe o menu inicial
-    this.showMenu();
     this.gameLoop();
   }
 
