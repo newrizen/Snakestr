@@ -19,6 +19,7 @@ export class SnakeGame {
     this.paddleWidth = 20;
     this.paddleHeight = 120;
     this.ballSize = 18;
+    this.peddleCellSize = 18;
   }
 
   showMenu() {
@@ -203,20 +204,20 @@ update() {
 
     
     // Draw left paddle as DEFAULT_EMOJI1
-    for (let i = 0; i < this.paddleHeight / (this.ballSize + 2) - 1; i++) { // 100/ (600/60 * 2)
+    for (let i = 0; i < this.paddleHeight / (this.peddleCellSize + 2) - 1; i++) { // 100/ (600/60 * 2)
       this.ctx.fillText(
         CONFIG.DEFAULT_EMOJI1,
         this.leftPaddle.x,
-        this.leftPaddle.y + (2 + this.ballSize + 3) * (i + 1) - 3 // spacingFactor
+        this.leftPaddle.y + (2 + this.peddleCellSize + 3) * (i + 1) - 3 // spacingFactor
       );
     }
 
     // Draw right paddle as DEFAULT_EMOJI2
-    for (let i = 0; i < this.paddleHeight / (this.ballSize + 2) - 1; i++) {
+    for (let i = 0; i < this.paddleHeight / (this.peddleCellSize + 2) - 1; i++) {
       this.ctx.fillText(
         CONFIG.DEFAULT_EMOJI2,
         this.rightPaddle.x - 5, // Align emoji properly
-        this.rightPaddle.y + (2 + this.ballSize + 3) * (i + 1) - 3 // spacingFactor
+        this.rightPaddle.y + (2 + this.peddleCellSize + 3) * (i + 1) - 3 // spacingFactor
       );
     }
 
