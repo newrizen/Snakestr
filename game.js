@@ -130,10 +130,31 @@ export class SnakeGame {
   }
 
 
-  update() {
+update() {
     // Update paddle positions
     this.leftPaddle.y += this.leftPaddle.dy;
     this.rightPaddle.y += this.rightPaddle.dy;
+
+    // Lógica para o paddle automático
+    if (this.playerSide === "left") {
+        // Move o paddle direito automaticamente
+        if (this.ball.y + this.ballSize / 2 > this.rightPaddle.y + this.paddleHeight / 2) {
+            this.rightPaddle.dy = CONFIG.PADDLE_SPEED / 2; // Movimenta para baixo
+        } else if (this.ball.y + this.ballSize / 2 < this.rightPaddle.y + this.paddleHeight / 2) {
+            this.rightPaddle.dy = -CONFIG.PADDLE_SPEED / 2; // Movimenta para cima
+        } else {
+            this.rightPaddle.dy = 0; // Fica parado se alinhado
+        }
+    } else if (this.playerSide === "right") {
+        // Move o paddle esquerdo automaticamente
+        if (this.ball.y + this.ballSize / 2 > this.leftPaddle.y + this.paddleHeight / 2) {
+            this.leftPaddle.dy = CONFIG.PADDLE_SPEED / 2; // Movimenta para baixo
+        } else if (this.ball.y + this.ballSize / 2 < this.leftPaddle.y + this.paddleHeight / 2) {
+            this.leftPaddle.dy = -CONFIG.PADDLE_SPEED / 2; // Movimenta para cima
+        } else {
+            this.leftPaddle.dy = 0; // Fica parado se alinhado
+        }
+    }
 
     // Prevent paddles from moving out of bounds
     this.leftPaddle.y = Math.max(0, Math.min(this.canvas.height - this.paddleHeight, this.leftPaddle.y));
@@ -145,38 +166,37 @@ export class SnakeGame {
 
     // Ball collision with top and bottom walls
     if (this.ball.y <= 0 || this.ball.y + this.ballSize >= this.canvas.height) {
-      this.ball.dy *= -1;
+        this.ball.dy *= -1;
     }
 
     // Ball collision with paddles
     if (
-      this.ball.x <= this.leftPaddle.x + this.paddleWidth &&
-      this.ball.y + this.ballSize >= this.leftPaddle.y &&
-      this.ball.y <= this.leftPaddle.y + this.paddleHeight
+        this.ball.x <= this.leftPaddle.x + this.paddleWidth &&
+        this.ball.y + this.ballSize >= this.leftPaddle.y &&
+        this.ball.y <= this.leftPaddle.y + this.paddleHeight
     ) {
-      this.ball.dx *= -1;
+        this.ball.dx *= -1;
     }
 
     if (
-      this.ball.x + this.ballSize >= this.rightPaddle.x &&
-      this.ball.y + this.ballSize >= this.rightPaddle.y &&
-      this.ball.y <= this.rightPaddle.y + this.paddleHeight
+        this.ball.x + this.ballSize >= this.rightPaddle.x &&
+        this.ball.y + this.ballSize >= this.rightPaddle.y &&
+        this.ball.y <= this.rightPaddle.y + this.paddleHeight
     ) {
-      this.ball.dx *= -1;
+        this.ball.dx *= -1;
     }
 
     // Check if a point is scored
     if (this.ball.x <= 0) {
-      this.rightScore++;
-      this.resetBall();
+        this.rightScore++;
+        this.resetBall();
     }
 
     if (this.ball.x + this.ballSize >= this.canvas.width) {
-      this.leftScore++;
-      this.resetBall();
+        this.leftScore++;
+        this.resetBall();
     }
-  }
-
+}
   draw() {
     // Clear the canvas
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
