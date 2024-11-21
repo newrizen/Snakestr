@@ -246,11 +246,11 @@ update() {
     }
 
     // Draw lightning
-    //this.ctx.fillText(
-    //  CONFIG.LIGHTNING_EMOJI,
-    //  this.lightning.x * this.cellSize + this.cellSize / 2,
-    //  this.lightning.y * this.cellSize + this.cellSize / 2
-    //);
+    this.ctx.fillText(
+      CONFIG.LIGHTNING_EMOJI,
+      this.lightning.x * this.peddleCellSize + this.peddleCellSize / 2,
+      this.lightning.y * this.peddleCellSize + this.peddleCellSize / 2
+    );
 
     // Draw ball as BOMB_EMOJI
     this.ctx.fillText(
