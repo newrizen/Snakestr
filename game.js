@@ -177,6 +177,10 @@ update() {
         this.ball.y <= this.leftPaddle.y + this.paddleHeight
     ) {
         this.ball.dx *= -1;
+
+      // Ativa o lightning no paddle esquerdo
+      this.leftPaddle.lightning = true;
+      setTimeout(() => this.leftPaddle.lightning = false, 2000); // Dura 2 segundos
     }
 
     if (
@@ -185,6 +189,10 @@ update() {
         this.ball.y <= this.rightPaddle.y + this.paddleHeight
     ) {
         this.ball.dx *= -1;
+
+      // Ativa o lightning no paddle direito
+      this.rightPaddle.lightning = true;
+      setTimeout(() => this.rightPaddle.lightning = false, 2000); // Dura 2 segundos
     }
 
     // Check if a point is scored
@@ -196,32 +204,6 @@ update() {
     if (this.ball.x + this.ballSize >= this.canvas.width) {
         this.leftScore++;
         this.resetBall();
-    }
-
-    // Verifica se a bola toca o paddle esquerdo
-    if (
-      this.ball.x <= this.leftPaddle.x + this.paddleWidth &&
-      this.ball.y + this.ballSize >= this.leftPaddle.y &&
-      this.ball.y <= this.leftPaddle.y + this.paddleHeight
-    ) {
-      this.ball.dx *= -1;
-  
-      // Ativa o lightning no paddle esquerdo
-      this.leftPaddle.lightning = true;
-      setTimeout(() => this.leftPaddle.lightning = false, 2000); // Dura 2 segundos
-    }
-  
-    // Verifica se a bola toca o paddle direito
-    if (
-      this.ball.x + this.ballSize >= this.rightPaddle.x &&
-      this.ball.y + this.ballSize >= this.rightPaddle.y &&
-      this.ball.y <= this.rightPaddle.y + this.paddleHeight
-    ) {
-      this.ball.dx *= -1;
-  
-      // Ativa o lightning no paddle direito
-      this.rightPaddle.lightning = true;
-      setTimeout(() => this.rightPaddle.lightning = false, 2000); // Dura 2 segundos
     }
 }
   
