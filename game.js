@@ -283,20 +283,24 @@ export class SnakeGame {
   resetBall() {
     // Salvar o emoji original da bola
     const originalEmoji = CONFIG.BOMB_EMOJI;
+    const originaldx = this.ball.dx;
+    const originaldy = this.ball.dy;
   
     // Trocar para o emoji de explosão
     CONFIG.BOMB_EMOJI = CONFIG.EXPLOSION_EMOJI;
 
+    this.ball.dx = 0;
+    this.ball.dy = 0;
+    
     // Restaurar o emoji original após 2 segundos
     setTimeout(() => {
       CONFIG.BOMB_EMOJI = originalEmoji;
-      this.ball.dx = 0;
-      this.ball.dy = 0;
-    }, 2000);
-    
+      this.ball.dx = originaldx;
+      this.ball.dy = originaldy;
       // Resetar a posição da bola
       this.ball.x = this.canvas.width / 2;
       this.ball.y = this.canvas.height / 2;
       this.ball.dx *= -1;
+    }, 2000);
   }
 }
