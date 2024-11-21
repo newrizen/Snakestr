@@ -217,35 +217,22 @@ export class SnakeGame {
     if (this.ball.x <= 0) {
       this.rightScore++;
       
-      // Change emoji to explosion and delay ball reset
-      const previousEmoji = CONFIG.BOMB_EMOJI;
-      CONFIG.BOMB_EMOJI = CONFIG.EXPLOSION_EMOJI;
-    
       setTimeout(() => {
-        CONFIG.BOMB_EMOJI = previousEmoji; // Reset to the original emoji
         this.resetBall(); // Reset the ball after 2 seconds
       }, 2000);
     }
 
     if (this.ball.x + this.ballSize >= this.canvas.width) {
       this.leftScore++;
-
-      // Change emoji to explosion and delay ball reset
-      const previousEmoji = CONFIG.BOMB_EMOJI;
-      CONFIG.BOMB_EMOJI = CONFIG.EXPLOSION_EMOJI;
-    
+      
       setTimeout(() => {
-        CONFIG.BOMB_EMOJI = previousEmoji; // Reset to the original emoji
         this.resetBall(); // Reset the ball after 2 seconds
       }, 2000);
-    }
+    }"
 
   draw() {
     // Clear the canvas
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
-    // Define um fator de espaçamento
-    const spacingFactor = 2; // Aumente ou diminua para ajustar o espaçamento
 
     
     // Draw left paddle as DEFAULT_EMOJI1
