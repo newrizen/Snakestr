@@ -7,10 +7,7 @@ export class SnakeGame {
     this.canvas.width = CONFIG.CANVAS_SIZE * 1.5;
     this.canvas.height = CONFIG.CANVAS_SIZE;
     this.cellSize = CONFIG.CANVAS_SIZE / CONFIG.GAME_SIZE;
-
-    // Escolha do jogador
-    this.playerSide = null; // "left" ou "right"
-
+    this.playerSide = null; // Escolha do jogador "left" ou "right"
     this.reset();
     this.lastRenderTime = 0;
     this.gameLoopId = null;
@@ -22,9 +19,6 @@ export class SnakeGame {
     this.paddleWidth = 20;
     this.paddleHeight = 120;
     this.ballSize = 18;
-
-    // Exibe o menu inicial
-    this.showMenu();
   }
 
   showMenu() {
@@ -115,6 +109,9 @@ export class SnakeGame {
   }
 
   start() {
+    this.reset();
+    // Exibe o menu inicial
+    this.showMenu();
     this.gameLoop();
   }
 
