@@ -216,18 +216,12 @@ export class SnakeGame {
     // Check if a point is scored
     if (this.ball.x <= 0) {
       this.rightScore++;
-      
-      setTimeout(() => {
-        this.resetBall(); // Reset the ball after 2 seconds
-      }, 2000);
+      this.resetBall(200);
     }
 
     if (this.ball.x + this.ballSize >= this.canvas.width) {
       this.leftScore++;
-      
-      setTimeout(() => {
-        this.resetBall(); // Reset the ball after 2 seconds
-      }, 2000);
+      this.resetBall(200);
     }"
 
   draw() {
