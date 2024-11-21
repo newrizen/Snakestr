@@ -258,12 +258,12 @@ update() {
     if (this.leftPaddle.electrified) {
       this.ctx.fillText(
         CONFIG.ELECTRIFIED_EMOJI,
-        this.leftPaddle.x + this.paddleWidth / 2, // Centralizado no paddle
+        this.leftPaddle.x, //+ this.paddleWidth / 2, // Centralizado no paddle
         this.leftPaddle.y // Na borda superior do paddle
       );
       this.ctx.fillText(
         CONFIG.ELECTRIFIED_EMOJI,
-        this.leftPaddle.x + this.paddleWidth / 2,
+        this.leftPaddle.x, //+ this.paddleWidth / 2,
         this.leftPaddle.y + this.paddleHeight // Na borda inferior do paddle
       );
     }
@@ -272,12 +272,12 @@ update() {
     if (this.rightPaddle.electrified) {
       this.ctx.fillText(
         CONFIG.ELECTRIFIED_EMOJI,
-        this.rightPaddle.x - this.paddleWidth / 2, // Centralizado no paddle
+        this.rightPaddle.x, //- this.paddleWidth / 2, // Centralizado no paddle
         this.rightPaddle.y // Na borda superior do paddle
       );
       this.ctx.fillText(
         CONFIG.ELECTRIFIED_EMOJI,
-        this.rightPaddle.x - this.paddleWidth / 2,
+        this.rightPaddle.x, //- this.paddleWidth / 2,
         this.rightPaddle.y + this.paddleHeight // Na borda inferior do paddle
       );
     }
