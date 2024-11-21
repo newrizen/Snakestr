@@ -281,8 +281,6 @@ update() {
         this.rightPaddle.y + this.paddleHeight // Na borda inferior do paddle
       );
     }
-    }
-
 
     // Draw ball as BOMB_EMOJI
     this.ctx.fillText(
