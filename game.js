@@ -293,7 +293,7 @@ export class SnakeGame {
     // Restaurar o emoji original após 2 segundos
     setTimeout(() => {
       CONFIG.BOMB_EMOJI = originalEmoji;
-      this.ballPaused = true; // Pausar a bola logicamente
+      this.ballPaused = false; // Retomar o movimento da bola
       // Resetar a posição da bola
       this.ball.x = this.canvas.width / 2;
       this.ball.y = this.canvas.height / 2;
