@@ -300,4 +300,14 @@ export class SnakeGame {
       this.ball.dx *= -1;
     }, 2000);
   }
+  
+  updateScoreDisplay() {
+    // This method should be implemented to update the score display in your UI
+    console.log(`Score: ${this.rightScore}`);
+  }
+  
+  onScoreUpdate(score) {
+    // This method can be overridden from outside to handle score updates
+    console.log(`Score Updated: ${score}`);
+  }
 }
