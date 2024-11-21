@@ -265,6 +265,13 @@ export class SnakeGame {
       this.ctx.translate(0, -(this.ball.y + this.ballSize / 2)); // Restore translation
     }
 
+    // Inverter horizontalmente se for o emoji de explosão
+    if (CONFIG.BOMB_EMOJI === CONFIG.EXPLOSION_EMOJI) {
+      this.ctx.translate(this.ball.x + this.ballSize / 2, 0); // Mover o ponto de referência
+      this.ctx.scale(-1, 1); // Espelhar horizontalmente
+      this.ctx.translate(-(this.ball.x + this.ballSize / 2), 0); // Restaurar a posição
+    }
+
     // Draw ball as BOMB_EMOJI
     this.ctx.fillText(
       CONFIG.BOMB_EMOJI,
