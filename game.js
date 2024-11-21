@@ -59,6 +59,7 @@ export class SnakeGame {
 
   startGame(menu) {
     this.start();
+    document.body.removeChild(menu); // Remove o menu da tela
   }
 
   reset() {
@@ -115,7 +116,6 @@ export class SnakeGame {
   }
 
   gameLoop(currentTime = 0) {
-    document.body.removeChild(menu); // Remove o menu da tela
     this.gameLoopId = window.requestAnimationFrame(this.gameLoop.bind(this));
     if (this.isPaused) return;
 
