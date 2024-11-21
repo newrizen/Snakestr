@@ -216,14 +216,29 @@ export class SnakeGame {
     // Check if a point is scored
     if (this.ball.x <= 0) {
       this.rightScore++;
-      this.resetBall();
+      
+      // Change emoji to explosion and delay ball reset
+      const previousEmoji = CONFIG.BOMB_EMOJI;
+      CONFIG.BOMB_EMOJI = CONFIG.EXPLOSION_EMOJI;
+    
+      setTimeout(() => {
+        CONFIG.BOMB_EMOJI = previousEmoji; // Reset to the original emoji
+        this.resetBall(); // Reset the ball after 2 seconds
+      }, 2000);
     }
 
     if (this.ball.x + this.ballSize >= this.canvas.width) {
       this.leftScore++;
-      this.resetBall();
+
+      // Change emoji to explosion and delay ball reset
+      const previousEmoji = CONFIG.BOMB_EMOJI;
+      CONFIG.BOMB_EMOJI = CONFIG.EXPLOSION_EMOJI;
+    
+      setTimeout(() => {
+        CONFIG.BOMB_EMOJI = previousEmoji; // Reset to the original emoji
+        this.resetBall(); // Reset the ball after 2 seconds
+      }, 2000);
     }
-  }
 
   draw() {
     // Clear the canvas
