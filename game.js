@@ -140,18 +140,18 @@ update() {
     if (this.playerSide === "left") {
         // Move o paddle direito automaticamente
         if (this.ball.y + this.ballSize / 2 > this.rightPaddle.y + this.paddleHeight / 2) {
-            this.rightPaddle.dy = CONFIG.PADDLE_SPEED / 2; // Movimenta para baixo
+            this.rightPaddle.dy = CONFIG.PADDLE_SPEED; // Movimenta para baixo
         } else if (this.ball.y + this.ballSize / 2 < this.rightPaddle.y + this.paddleHeight / 2) {
-            this.rightPaddle.dy = -CONFIG.PADDLE_SPEED / 2; // Movimenta para cima
+            this.rightPaddle.dy = -CONFIG.PADDLE_SPEED; // Movimenta para cima
         } else {
             this.rightPaddle.dy = 0; // Fica parado se alinhado
         }
     } else if (this.playerSide === "right") {
         // Move o paddle esquerdo automaticamente
         if (this.ball.y + this.ballSize / 2 > this.leftPaddle.y + this.paddleHeight / 2) {
-            this.leftPaddle.dy = CONFIG.PADDLE_SPEED / 2; // Movimenta para baixo
+            this.leftPaddle.dy = CONFIG.PADDLE_SPEED; // Movimenta para baixo
         } else if (this.ball.y + this.ballSize / 2 < this.leftPaddle.y + this.paddleHeight / 2) {
-            this.leftPaddle.dy = -CONFIG.PADDLE_SPEED / 2; // Movimenta para cima
+            this.leftPaddle.dy = -CONFIG.PADDLE_SPEED; // Movimenta para cima
         } else {
             this.leftPaddle.dy = 0; // Fica parado se alinhado
         }
