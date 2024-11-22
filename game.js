@@ -245,12 +245,12 @@ update() {
     if (this.leftPaddle.electrified) {
       this.ctx.fillText(
         leftElectrifiedEmoji,
-        this.leftPaddle.x + this.paddleWidth / 2, // Centralizado no paddle
+        this.leftPaddle.x + this.paddleWidth, // Centralizado no paddle
         this.leftPaddle.y - 5 // Na borda superior do paddle
       );
       this.ctx.fillText(
         leftElectrifiedEmoji,
-        this.leftPaddle.x + this.paddleWidth / 2,
+        this.leftPaddle.x + this.paddleWidth,
         this.leftPaddle.y + this.paddleHeight + 10 // Na borda inferior do paddle
       );
     }
@@ -282,13 +282,13 @@ update() {
     if (this.rightPaddle.electrified) {
       this.ctx.fillText(
         rightElectrifiedEmoji,
-        this.rightPaddle.x - this.paddleWidth / 2, // Centralizado no paddle
+        this.rightPaddle.x, //- this.paddleWidth / 2, // Centralizado no paddle
         this.rightPaddle.y - 5 // Na borda superior do paddle
       );
       this.ctx.fillText(
         rightElectrifiedEmoji,
-        this.rightPaddle.x, - this.paddleWidth / 2,
-        this.rightPaddle.y + this.paddleHeight - 10 // Na borda inferior do paddle
+        this.rightPaddle.x, //- this.paddleWidth // 2,
+        this.rightPaddle.y + this.paddleHeight // Na borda inferior do paddle
       );
     }
 
