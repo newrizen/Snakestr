@@ -5,6 +5,7 @@ export const CONFIG = {
   //CANVAS_SIZE: 400,
   DEFAULT_EMOJI1: "🟪",
   DEFAULT_EMOJI2: "🟧",
+  EYE_EMOJI: "👀",
   BOMB_EMOJI: "💣",
   EXPLOSION_EMOJI: "💥",
   UNLOCKABLE_EMOJIS1: ["🤬", "🔥", "😡", "🥷🏼", "👿"],
