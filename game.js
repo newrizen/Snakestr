@@ -261,11 +261,11 @@ update() {
         this.leftPaddle.x + this.paddleWidth / 2, // Centralizado no paddle
         this.leftPaddle.y  // Na borda superior do paddle
       );
-      //this.ctx.fillText(
-      //  CONFIG.ELECTRIFIED_EMOJI,
-      //  this.leftPaddle.x + this.paddleWidth / 2,
-      //  this.leftPaddle.y + this.paddleHeight // Na borda inferior do paddle
-      //);
+      this.ctx.fillText(
+        CONFIG.ELECTRIFIED_EMOJI,
+        this.leftPaddle.x + this.paddleWidth / 2,
+        this.leftPaddle.y + this.paddleHeight // Na borda inferior do paddle
+      );
     }
     
     // Desenha o paddle direito com electrified
@@ -275,11 +275,11 @@ update() {
         this.rightPaddle.x - this.paddleWidth / 2, // Centralizado no paddle
         this.rightPaddle.y // Na borda superior do paddle
       );
-      //this.ctx.fillText(
-      //  CONFIG.ELECTRIFIED_EMOJI,
-      //  this.rightPaddle.x, //- this.paddleWidth / 2,
-      //  this.rightPaddle.y + this.paddleHeight // Na borda inferior do paddle
-      //);
+      this.ctx.fillText(
+        CONFIG.ELECTRIFIED_EMOJI,
+        this.rightPaddle.x, //- this.paddleWidth / 2,
+        this.rightPaddle.y + this.paddleHeight // Na borda inferior do paddle
+      );
     }
 
     // Draw ball as BOMB_EMOJI
@@ -288,7 +288,27 @@ update() {
       this.ball.x - 3,
       this.ball.y + this.ballSize * 5 / 6
     );
-  
+
+    const drawPaddle = (paddle, defaultEmoji, side) => {
+        const paddleCells = Math.floor(this.paddleHeight / this.peddleCellSize);
+        const spacingFactor = 2; // Ajuste de espaçamento entre os emojis
+        const eyeEmojiYPosition = paddle.dy > 0
+            ? paddle.y + (paddleCells - 1) * this.peddleCellSize // Última posição
+            : paddle.y; // Primeira posição
+
+        for (let i = 0; i < paddleCells; i++) {
+            const emoji = (i === 0 && paddle.dy < 0) || (i === paddleCells - 1 && paddle.dy > 0)
+                ? CONFIG.EYE_EMOJI // Aplica o eye_emoji nas extremidades baseadas no movimento
+                : defaultEmoji;
+
+            this.ctx.fillText(
+                emoji,
+                paddle.x + (side === "right" ? -5 : 0), // Ajustar alinhamento para paddles diferentes
+                paddle.y + i * this.peddleCellSize
+            );
+        }
+    };
+    
     this.ctx.restore(); // Restore the original canvas state
 
     // Draw scores
