@@ -211,6 +211,9 @@ update() {
     // Clear the canvas
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
+    // Adicionar emoji ao final/início do paddle esquerdo
+    const leftEyeEmoji = CONFIG.EYE_EMOJI;
+    const rightEyeEmoji = CONFIG.EYE_EMOJI;
     
     // Draw left paddle as DEFAULT_EMOJI1
     for (let i = 0; i < this.paddleHeight / (this.peddleCellSize + 2) - 1; i++) { // 100/ (600/60 * 2)
@@ -219,6 +222,20 @@ update() {
         this.leftPaddle.x,
         this.leftPaddle.y + (2 + this.peddleCellSize + 3) * (i + 1) - 3 // spacingFactor
       );
+    }
+
+    if (this.leftPaddle.dy > 0) { // Movendo para baixo
+    this.ctx.fillText(
+        leftEyeEmoji,
+        this.leftPaddle.x,
+        this.leftPaddle.y + this.paddleHeight - this.peddleCellSize // Final do paddle
+        );
+    } else if (this.leftPaddle.dy < 0) { // Movendo para cima
+        this.ctx.fillText(
+            leftEyeEmoji,
+            this.leftPaddle.x,
+            this.leftPaddle.y // Início do paddle
+        );
     }
 
     // Draw right paddle as DEFAULT_EMOJI2
@@ -230,6 +247,19 @@ update() {
       );
     }
 
+    if (this.rightPaddle.dy > 0) { // Movendo para baixo
+        this.ctx.fillText(
+            rightEyeEmoji,
+            this.rightPaddle.x - 5,
+            this.rightPaddle.y + this.paddleHeight - this.peddleCellSize // Final do paddle
+        );
+    } else if (this.rightPaddle.dy < 0) { // Movendo para cima
+        this.ctx.fillText(
+            rightEyeEmoji,
+            this.rightPaddle.x - 5,
+            this.rightPaddle.y // Início do paddle
+        );
+    }
 
     // Draw ball with horizontal flip if moving right
     this.ctx.save(); // Save the current canvas state
@@ -288,26 +318,6 @@ update() {
       this.ball.x - 3,
       this.ball.y + this.ballSize * 5 / 6
     );
-
-    const drawPaddle = (paddle, defaultEmoji, side) => {
-        const paddleCells = Math.floor(this.paddleHeight / this.peddleCellSize);
-        const spacingFactor = 2; // Ajuste de espaçamento entre os emojis
-        const eyeEmojiYPosition = paddle.dy > 0
-            ? paddle.y + (paddleCells - 1) * this.peddleCellSize // Última posição
-            : paddle.y; // Primeira posição
-
-        for (let i = 0; i < paddleCells; i++) {
-            const emoji = (i === 0 && paddle.dy < 0) || (i === paddleCells - 1 && paddle.dy > 0)
-                ? CONFIG.EYE_EMOJI // Aplica o eye_emoji nas extremidades baseadas no movimento
-                : defaultEmoji;
-
-            this.ctx.fillText(
-                emoji,
-                paddle.x + (side === "right" ? -5 : 0), // Ajustar alinhamento para paddles diferentes
-                paddle.y + i * this.peddleCellSize
-            );
-        }
-    };
     
     this.ctx.restore(); // Restore the original canvas state
 
