@@ -14,7 +14,7 @@ export const CONFIG = {
   ELECTRIFIED_EMOJI: "⚡", // Emoji to represent electrified state
 
   CANVAS_SIZE: 600,
-  BALL_SPEED: 7,
+  BALL_SPEED: 6,
   PADDLE_SPEED: 5,
   TICK_RATE: 60,
 };
