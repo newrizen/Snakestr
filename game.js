@@ -228,13 +228,13 @@ update() {
     this.ctx.fillText(
         leftEyeEmoji,
         this.leftPaddle.x,
-        this.leftPaddle.y + this.paddleHeight //- this.peddleCellSize * 2 // Final do paddle
+        this.leftPaddle.y + this.paddleHeight - this.peddleCellSize / 2 // Final do paddle
         );
     } else if (this.leftPaddle.dy < 0) { // Movendo para cima
         this.ctx.fillText(
             leftEyeEmoji,
             this.leftPaddle.x,
-            this.leftPaddle.y - this.peddleCellSize // Início do paddle
+            this.leftPaddle.y + this.peddleCellSize // Início do paddle
         );
     }
 
@@ -251,13 +251,13 @@ update() {
         this.ctx.fillText(
             rightEyeEmoji,
             this.rightPaddle.x - 5,
-            this.rightPaddle.y + this.paddleHeight //- this.peddleCellSize * 2 // Final do paddle
+            this.rightPaddle.y + this.paddleHeight - this.peddleCellSize / 2 // Final do paddle
         );
     } else if (this.rightPaddle.dy < 0) { // Movendo para cima
         this.ctx.fillText(
             rightEyeEmoji,
             this.rightPaddle.x - 5,
-            this.rightPaddle.y - this.peddleCellSize// Início do paddle
+            this.rightPaddle.y + this.peddleCellSize// Início do paddle
         );
     }
 
