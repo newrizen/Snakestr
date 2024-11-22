@@ -251,7 +251,7 @@ update() {
       this.ctx.fillText(
         leftElectrifiedEmoji,
         this.leftPaddle.x + this.paddleWidth / 2,
-        this.leftPaddle.y + this.paddleHeight + 5 // Na borda inferior do paddle
+        this.leftPaddle.y + this.paddleHeight + 10 // Na borda inferior do paddle
       );
     }
     
@@ -288,7 +288,7 @@ update() {
       this.ctx.fillText(
         rightElectrifiedEmoji,
         this.rightPaddle.x, - this.paddleWidth / 2,
-        this.rightPaddle.y + this.paddleHeight + 5 // Na borda inferior do paddle
+        this.rightPaddle.y + this.paddleHeight - 10 // Na borda inferior do paddle
       );
     }
 
