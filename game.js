@@ -211,9 +211,12 @@ update() {
     // Clear the canvas
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-    // Adicionar emoji ao final/início do paddle esquerdo
+    // Adicionar emoji ao final/início do paddle esquerdo e direito
     const leftEyeEmoji = CONFIG.EYE_EMOJI;
     const rightEyeEmoji = CONFIG.EYE_EMOJI;
+    // Adicionar emoji ao final/início do paddle esquerdo
+    const leftElectrifiedEmoji = CONFIG.ELECTRIFIED_EMOJI;
+    const rightElectrifiedEmoji = CONFIG.ELECTRIFIED_EMOJI;
     
     // Draw left paddle as DEFAULT_EMOJI1
     for (let i = 0; i < this.paddleHeight / (this.peddleCellSize + 2) - 1; i++) { // 100/ (600/60 * 2)
@@ -223,7 +226,7 @@ update() {
         this.leftPaddle.y + (2 + this.peddleCellSize + 3) * (i + 1) - 3 // spacingFactor
       );
     }
-
+    // Desenha o paddle esquerdo com os olhos
     if (this.leftPaddle.dy > 0) { // Movendo para baixo
     this.ctx.fillText(
         leftEyeEmoji,
@@ -238,6 +241,20 @@ update() {
         );
     }
 
+    // Desenha o paddle esquerdo com electrified
+    if (this.leftPaddle.electrified) {
+      this.ctx.fillText(
+        leftElectrifiedEmoji,
+        this.leftPaddle.x + this.paddleWidth / 2, // Centralizado no paddle
+        this.leftPaddle.y  // Na borda superior do paddle
+      );
+      this.ctx.fillText(
+        leftElectrifiedEmoji,
+        this.leftPaddle.x + this.paddleWidth / 2,
+        this.leftPaddle.y + this.paddleHeight // Na borda inferior do paddle
+      );
+    }
+    
     // Draw right paddle as DEFAULT_EMOJI2
     for (let i = 0; i < this.paddleHeight / (this.peddleCellSize + 2) - 1; i++) {
       this.ctx.fillText(
@@ -246,7 +263,7 @@ update() {
         this.rightPaddle.y + (2 + this.peddleCellSize + 3) * (i + 1) - 3 // spacingFactor
       );
     }
-
+    // Desenha o paddle direito com os olhos
     if (this.rightPaddle.dy > 0) { // Movendo para baixo
         this.ctx.fillText(
             rightEyeEmoji,
@@ -259,6 +276,20 @@ update() {
             this.rightPaddle.x - 5,
             this.rightPaddle.y + this.peddleCellSize// Início do paddle
         );
+    }
+    
+    // Desenha o paddle direito com electrified
+    if (this.rightPaddle.electrified) {
+      this.ctx.fillText(
+        rightElectrifiedEmoji,
+        this.rightPaddle.x - this.paddleWidth / 2, // Centralizado no paddle
+        this.rightPaddle.y // Na borda superior do paddle
+      );
+      this.ctx.fillText(
+        rightElectrifiedEmoji,
+        this.rightPaddle.x, //- this.paddleWidth / 2,
+        this.rightPaddle.y + this.paddleHeight // Na borda inferior do paddle
+      );
     }
 
     // Draw ball with horizontal flip if moving right
@@ -282,34 +313,6 @@ update() {
       this.ctx.translate(this.ball.x + this.ballSize / 2, 0); // Mover o ponto de referência
       this.ctx.scale(-1, 1); // Espelhar horizontalmente
       this.ctx.translate(-(this.ball.x + this.ballSize / 2), 0); // Restaurar a posição
-    }
-
-    // Desenha o paddle esquerdo com electrified
-    if (this.leftPaddle.electrified) {
-      this.ctx.fillText(
-        CONFIG.ELECTRIFIED_EMOJI,
-        this.leftPaddle.x + this.paddleWidth / 2, // Centralizado no paddle
-        this.leftPaddle.y  // Na borda superior do paddle
-      );
-      this.ctx.fillText(
-        CONFIG.ELECTRIFIED_EMOJI,
-        this.leftPaddle.x + this.paddleWidth / 2,
-        this.leftPaddle.y + this.paddleHeight // Na borda inferior do paddle
-      );
-    }
-    
-    // Desenha o paddle direito com electrified
-    if (this.rightPaddle.electrified) {
-      this.ctx.fillText(
-        CONFIG.ELECTRIFIED_EMOJI,
-        this.rightPaddle.x - this.paddleWidth / 2, // Centralizado no paddle
-        this.rightPaddle.y // Na borda superior do paddle
-      );
-      this.ctx.fillText(
-        CONFIG.ELECTRIFIED_EMOJI,
-        this.rightPaddle.x, //- this.paddleWidth / 2,
-        this.rightPaddle.y + this.paddleHeight // Na borda inferior do paddle
-      );
     }
 
     // Draw ball as BOMB_EMOJI
