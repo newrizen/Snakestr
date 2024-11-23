@@ -373,6 +373,10 @@ addRockEmoji() {
       this.ball.x - 3,
       this.ball.y + this.ballSize * 5 / 6
     );
+
+    if (this.rockEmoji) {
+      this.ctx.fillText("🪨", this.rockEmoji.x, this.rockEmoji.y);
+    }
     
     this.ctx.restore(); // Restore the original canvas state
 
@@ -401,10 +405,6 @@ addRockEmoji() {
       this.ball.y = this.canvas.height / 2;
       this.ball.dx *= -1;
     }, 2000);
-  }
-  
-  if (this.rockEmoji) {
-    this.ctx.fillText("🪨", this.rockEmoji.x, this.rockEmoji.y);
   }
   
   updateScoreDisplay() {
