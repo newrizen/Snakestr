@@ -18,8 +18,9 @@ export class SnakeGame {
 
     this.paddleWidth = 20;
     this.paddleHeight = 120;
-    this.ballSize = 18;
     this.peddleCellSize = 18;
+    this.ballSize = 18;
+    this.rockBlockSize = 18;
   }
 
   showMenu() {
@@ -205,6 +206,57 @@ update() {
         this.leftScore++;
         this.resetBall();
     }
+
+    // Insere os emojis de rock de forma aleatória
+    this.addRockEmoji();
+}
+
+addRockEmoji() {
+    if (!this.rockEmoji) {
+        const randomIntervalX = Math.random(); // Decide o intervalo de X
+        const randomIntervalY = Math.random(); // Decide o intervalo de Y
+
+        const xRanges = [
+            [this.canvas.width * 0.2, this.canvas.width * 0.4],
+            [this.canvas.width * 0.6, this.canvas.width * 0.8]
+        ];
+        const yRanges = [
+            [0, this.canvas.height / 3],
+            [this.canvas.height * 2 / 3, this.canvas.height]
+        ];
+
+        let xRange, yRange;
+
+        // Determina o intervalo de x
+        if (randomIntervalX < 0.5) {
+            xRange = xRanges[0];
+        } else {
+            xRange = xRanges[1];
+        }
+
+        // Determina o intervalo de y
+        if (randomIntervalY < 0.5) {
+            yRange = yRanges[0];
+        } else {
+            yRange = yRanges[1];
+        }
+
+        // Define a posição do emoji
+        this.rockEmoji = {
+            x: Math.random() * (xRange[1] - xRange[0]) + xRange[0],
+            y: Math.random() * (yRange[1] - yRange[0]) + yRange[0]
+        };
+    }
+  
+    // Verifica colisão com a bola
+    if (this.rockEmoji && 
+        this.ball.x < this.rockEmoji.x + this.rockBlockSize &&
+        this.ball.x + this.ballSize > this.rockEmoji.x &&
+        this.ball.y < this.rockEmoji.y + this.rockBlockSize &&
+        this.ball.y + this.ballSize > this.rockEmoji.y) {
+        // Emoji colidiu com a bola, remove-o
+        this.rockEmoji = null;
+    }
 }
   
   draw() {
@@ -349,6 +401,10 @@ update() {
       this.ball.y = this.canvas.height / 2;
       this.ball.dx *= -1;
     }, 2000);
+  }
+  
+  if (this.rockEmoji) {
+    this.ctx.fillText("🪨", this.rockEmoji.x, this.rockEmoji.y);
   }
   
   updateScoreDisplay() {
