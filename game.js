@@ -160,14 +160,21 @@ addRockEmoji() {
         if (collidedX) {
             // Ação quando a bola atinge a pedra (opcional)
             this.ball.dx *= -1;
+            return false;  // Remove a pedra se colidida
         }
         else if (collidedY) {
             // Ação quando a bola atinge a pedra (opcional)
             this.ball.dy *= -1;
+            return false; // Remove a pedra se colidida
+        }
+        else if (collidedX && collidedY) {
+        // Inverte ambas as direções em caso de colisão total
+        this.ball.dx *= -1;
+        this.ball.dy *= -1;
+        return false; // Remove a rocha
         }
       
-        return !collidedX; // Remove a pedra se colidida em X
-        return !collidedY; // Remove a pedra se colidida em Y
+        return true; // Mantem a pedra
     });
 }
   
