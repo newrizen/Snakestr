@@ -367,7 +367,7 @@ update() {
 
     // Desenha as pedras
     this.rocks.forEach(rock => {
-        this.ctx.fillStyle = "gray"; // Cor ou estilo da pedra
+        this.ctx.fillText(CONFIG.EYE_EMOJI); // "gray" Cor ou estilo da pedra
         this.ctx.fillRect(rock.x, rock.y, rock.size, rock.size);
     });
     
