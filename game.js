@@ -152,10 +152,8 @@ addRockEmoji() {
 
     // Verifica colisão com a bola
     this.rocks = this.rocks.filter(rock => {
-        const collidedX = this.ball.x < rock.x + rock.size &&
-                         this.ball.x + this.ballSize > rock.x;
-        const collidedY = this.ball.y < rock.y + rock.size &&
-                         this.ball.y + this.ballSize > rock.y;
+        const collidedX = this.ball.x < rock.x + rock.size && this.ball.x + this.ballSize > rock.x;
+        const collidedY = this.ball.y < rock.y + rock.size && this.ball.y + this.ballSize > rock.y;
 
         if (collidedX && collidedY) {
         // Inverte ambas as direções em caso de colisão total
@@ -223,11 +221,18 @@ update() {
   
     // Ball collision with paddles
     if (
-        this.ball.x <= this.leftPaddle.x + this.paddleWidth &&
+        this.ball.x <= this.leftPaddle.x + this.paddleWidth //&&
+        //this.ball.y + this.ballSize >= this.leftPaddle.y &&
+        //this.ball.y <= this.leftPaddle.y + this.paddleHeight
+    ) {
+        this.ball.dx *= -1;
+
+    else if (
+        //this.ball.x <= this.leftPaddle.x + this.paddleWidth &&
         this.ball.y + this.ballSize >= this.leftPaddle.y &&
         this.ball.y <= this.leftPaddle.y + this.paddleHeight
     ) {
-        this.ball.dx *= -1;
+        this.ball.dy *= -1;
 
       // Ativa o electrified no paddle esquerdo
       this.leftPaddle.electrified = true;
@@ -235,11 +240,18 @@ update() {
     }
 
     if (
-        this.ball.x + this.ballSize >= this.rightPaddle.x &&
+        this.ball.x + this.ballSize >= this.rightPaddle.x //&&
+        //this.ball.y + this.ballSize >= this.rightPaddle.y &&
+        //this.ball.y <= this.rightPaddle.y + this.paddleHeight
+    ) {
+        this.ball.dx *= -1;
+
+    else if (
+        //this.ball.x + this.ballSize >= this.rightPaddle.x &&
         this.ball.y + this.ballSize >= this.rightPaddle.y &&
         this.ball.y <= this.rightPaddle.y + this.paddleHeight
     ) {
-        this.ball.dx *= -1;
+        this.ball.dy *= -1;
 
       // Ativa o electrified no paddle direito
       this.rightPaddle.electrified = true;
@@ -375,8 +387,7 @@ update() {
 
     // Desenha as pedras
     this.rocks.forEach(rock => {
-        this.ctx.fillText(CONFIG.ROCK_EMOJI, rock.x, rock.y); // "gray" Cor ou estilo da pedra
-        //this.ctx.fillRect(rock.x, rock.y, rock.size, rock.size);
+        this.ctx.fillText(CONFIG.ROCK_EMOJI, rock.x, rock.y); // Emoji de pedra
     });
     
     this.ctx.restore(); // Restore the original canvas state
