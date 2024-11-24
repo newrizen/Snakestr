@@ -157,7 +157,13 @@ addRockEmoji() {
         const collidedY = this.ball.y < rock.y + rock.size &&
                          this.ball.y + this.ballSize > rock.y;
 
-        if (collidedX) {
+        if (collidedX && collidedY) {
+        // Inverte ambas as direções em caso de colisão total
+        this.ball.dx *= -1;
+        this.ball.dy *= -1;
+        return false; // Remove a rocha
+        }
+        else if (collidedX) {
             // Ação quando a bola atinge a pedra (opcional)
             this.ball.dx *= -1;
             return false;  // Remove a pedra se colidida
@@ -166,12 +172,6 @@ addRockEmoji() {
             // Ação quando a bola atinge a pedra (opcional)
             this.ball.dy *= -1;
             return false; // Remove a pedra se colidida
-        }
-        else if (collidedX && collidedY) {
-        // Inverte ambas as direções em caso de colisão total
-        this.ball.dx *= -1;
-        this.ball.dy *= -1;
-        return false; // Remove a rocha
         }
       
         return true; // Mantem a pedra
