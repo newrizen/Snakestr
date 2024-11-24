@@ -159,7 +159,7 @@ addRockEmoji() {
 
         if (collided) {
             // Ação quando a bola atinge a pedra (opcional)
-            console.log("Pedra atingida!");
+            this.ball.dx *= -1;
         }
 
         return !collided; // Remove a pedra se colidida
