@@ -135,7 +135,7 @@ export class SnakeGame {
 addRockEmoji() {
     // Gera uma nova pedra em intervalos aleatórios
     if (Math.random() < 0.01) { // Ajuste a frequência de geração conforme necessário
-        const randomX = Math.random() * (this.canvas.width * 2/3 + this.canvas.width/6 - this.rockBlockSize);
+        const randomX = Math.random() * (this.canvas.width * 2/3 - this.rockBlockSize) + this.canvas.width/6;
         const randomY = Math.random() * (this.canvas.height - this.rockBlockSize);
 
         this.rocks.push({
@@ -161,12 +161,13 @@ addRockEmoji() {
             // Ação quando a bola atinge a pedra (opcional)
             this.ball.dx *= -1;
         }
-        if (collidedY) {
+        else if (collidedY) {
             // Ação quando a bola atinge a pedra (opcional)
             this.ball.dy *= -1;
         }
       
-        return !collided; // Remove a pedra se colidida
+        return !collidedX; // Remove a pedra se colidida em X
+        return !collidedY; // Remove a pedra se colidida em Y
     });
 }
   
