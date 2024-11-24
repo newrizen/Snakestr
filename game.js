@@ -134,8 +134,8 @@ export class SnakeGame {
 
 addRockEmoji() {
     // Gera uma nova pedra em intervalos aleatórios
-    if (Math.random() < 0.02) { // Ajuste a frequência de geração conforme necessário
-        const randomX = Math.random() * (this.canvas.width * 2/3 - this.rockBlockSize);
+    if (Math.random() < 0.01) { // Ajuste a frequência de geração conforme necessário
+        const randomX = Math.random() * (this.canvas.width * 2/3 - this.rockBlockSize) + this.canvas.width/2;
         const randomY = Math.random() * (this.canvas.height - this.rockBlockSize);
 
         this.rocks.push({
@@ -146,22 +146,26 @@ addRockEmoji() {
         });
     }
 
-    // Remove pedras que excederam 10 segundos
+    // Remove pedras que excederam 30 segundos
     const currentTime = performance.now();
     this.rocks = this.rocks.filter(rock => currentTime - rock.spawnTime < 30000);
 
     // Verifica colisão com a bola
     this.rocks = this.rocks.filter(rock => {
-        const collided = this.ball.x < rock.x + rock.size &&
-                         this.ball.x + this.ballSize > rock.x &&
-                         this.ball.y < rock.y + rock.size &&
+        const collidedX = this.ball.x < rock.x + rock.size &&
+                         this.ball.x + this.ballSize > rock.x;
+        const collidedY = this.ball.y < rock.y + rock.size &&
                          this.ball.y + this.ballSize > rock.y;
 
-        if (collided) {
+        if (collidedX) {
             // Ação quando a bola atinge a pedra (opcional)
             this.ball.dx *= -1;
         }
-
+        if (collidedY) {
+            // Ação quando a bola atinge a pedra (opcional)
+            this.ball.dy *= -1;
+        }
+      
         return !collided; // Remove a pedra se colidida
     });
 }
