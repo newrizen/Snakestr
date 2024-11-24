@@ -132,7 +132,40 @@ export class SnakeGame {
     this.draw();
   }
 
+addRockEmoji() {
+    // Gera uma nova pedra em intervalos aleatórios
+    if (Math.random() < 0.01) { // Ajuste a frequência de geração conforme necessário
+        const randomX = Math.random() * (this.canvas.width - this.rockBlockSize);
+        const randomY = Math.random() * (this.canvas.height - this.rockBlockSize);
 
+        this.rocks.push({
+            x: randomX,
+            y: randomY,
+            size: this.rockBlockSize,
+            spawnTime: performance.now()
+        });
+    }
+
+    // Remove pedras que excederam 10 segundos
+    const currentTime = performance.now();
+    this.rocks = this.rocks.filter(rock => currentTime - rock.spawnTime < 10000);
+
+    // Verifica colisão com a bola
+    this.rocks = this.rocks.filter(rock => {
+        const collided = this.ball.x < rock.x + rock.size &&
+                         this.ball.x + this.ballSize > rock.x &&
+                         this.ball.y < rock.y + rock.size &&
+                         this.ball.y + this.ballSize > rock.y;
+
+        if (collided) {
+            // Ação quando a bola atinge a pedra (opcional)
+            console.log("Pedra atingida!");
+        }
+
+        return !collided; // Remove a pedra se colidida
+    });
+}
+  
 update() {
     // Update paddle positions
     this.leftPaddle.y += this.leftPaddle.dy;
@@ -210,40 +243,6 @@ update() {
 
     // Insere os emojis de rock de forma aleatória
     this.addRockEmoji();
-}
-
-addRockEmoji() {
-    // Gera uma nova pedra em intervalos aleatórios
-    if (Math.random() < 0.01) { // Ajuste a frequência de geração conforme necessário
-        const randomX = Math.random() * (this.canvas.width - this.rockBlockSize);
-        const randomY = Math.random() * (this.canvas.height - this.rockBlockSize);
-
-        this.rocks.push({
-            x: randomX,
-            y: randomY,
-            size: this.rockBlockSize,
-            spawnTime: performance.now()
-        });
-    }
-
-    // Remove pedras que excederam 10 segundos
-    const currentTime = performance.now();
-    this.rocks = this.rocks.filter(rock => currentTime - rock.spawnTime < 10000);
-
-    // Verifica colisão com a bola
-    this.rocks = this.rocks.filter(rock => {
-        const collided = this.ball.x < rock.x + rock.size &&
-                         this.ball.x + this.ballSize > rock.x &&
-                         this.ball.y < rock.y + rock.size &&
-                         this.ball.y + this.ballSize > rock.y;
-
-        if (collided) {
-            // Ação quando a bola atinge a pedra (opcional)
-            console.log("Pedra atingida!");
-        }
-
-        return !collided; // Remove a pedra se colidida
-    });
 }
   
   draw() {
