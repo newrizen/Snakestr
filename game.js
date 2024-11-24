@@ -21,6 +21,7 @@ export class SnakeGame {
     this.peddleCellSize = 18;
     this.ballSize = 18;
     this.rockBlockSize = 18;
+    this.rocks = [];
   }
 
   showMenu() {
@@ -212,51 +213,37 @@ update() {
 }
 
 addRockEmoji() {
-    if (!this.rockEmoji) {
-        const randomIntervalX = Math.random(); // Decide o intervalo de X
-        const randomIntervalY = Math.random(); // Decide o intervalo de Y
+    // Gera uma nova pedra em intervalos aleatórios
+    if (Math.random() < 0.01) { // Ajuste a frequência de geração conforme necessário
+        const randomX = Math.random() * (this.canvas.width - this.rockBlockSize);
+        const randomY = Math.random() * (this.canvas.height - this.rockBlockSize);
 
-        const xRanges = [
-            [this.canvas.width * 0.2, this.canvas.width * 0.4],
-            [this.canvas.width * 0.6, this.canvas.width * 0.8]
-        ];
-        const yRanges = [
-            [0, this.canvas.height / 3],
-            [this.canvas.height * 2 / 3, this.canvas.height]
-        ];
-
-        let xRange, yRange;
-
-        // Determina o intervalo de x
-        if (randomIntervalX < 0.5) {
-            xRange = xRanges[0];
-        } else {
-            xRange = xRanges[1];
-        }
-
-        // Determina o intervalo de y
-        if (randomIntervalY < 0.5) {
-            yRange = yRanges[0];
-        } else {
-            yRange = yRanges[1];
-        }
-
-        // Define a posição do emoji
-        this.rockEmoji = {
-            x: Math.random() * (xRange[1] - xRange[0]) + xRange[0],
-            y: Math.random() * (yRange[1] - yRange[0]) + yRange[0]
-        };
+        this.rocks.push({
+            x: randomX,
+            y: randomY,
+            size: this.rockBlockSize,
+            spawnTime: performance.now()
+        });
     }
-  
+
+    // Remove pedras que excederam 10 segundos
+    const currentTime = performance.now();
+    this.rocks = this.rocks.filter(rock => currentTime - rock.spawnTime < 10000);
+
     // Verifica colisão com a bola
-    if (this.rockEmoji && 
-        this.ball.x < this.rockEmoji.x + this.rockBlockSize &&
-        this.ball.x + this.ballSize > this.rockEmoji.x &&
-        this.ball.y < this.rockEmoji.y + this.rockBlockSize &&
-        this.ball.y + this.ballSize > this.rockEmoji.y) {
-        // Emoji colidiu com a bola, remove-o
-        this.rockEmoji = null;
-    }
+    this.rocks = this.rocks.filter(rock => {
+        const collided = this.ball.x < rock.x + rock.size &&
+                         this.ball.x + this.ballSize > rock.x &&
+                         this.ball.y < rock.y + rock.size &&
+                         this.ball.y + this.ballSize > rock.y;
+
+        if (collided) {
+            // Ação quando a bola atinge a pedra (opcional)
+            console.log("Pedra atingida!");
+        }
+
+        return !collided; // Remove a pedra se colidida
+    });
 }
   
   draw() {
@@ -374,9 +361,11 @@ addRockEmoji() {
       this.ball.y + this.ballSize * 5 / 6
     );
 
-    if (this.rockEmoji) {
-      this.ctx.fillText("🪨", this.rockEmoji.x, this.rockEmoji.y);
-    }
+    // Desenha as pedras
+    this.rocks.forEach(rock => {
+        this.ctx.fillStyle = "gray"; // Cor ou estilo da pedra
+        this.ctx.fillRect(rock.x, rock.y, rock.size, rock.size);
+    });
     
     this.ctx.restore(); // Restore the original canvas state
 
