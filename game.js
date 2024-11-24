@@ -217,6 +217,10 @@ update() {
         this.ball.dy *= -1;
     }
 
+
+    // Insere os emojis de rock de forma aleatória
+    this.addRockEmoji();
+  
     // Ball collision with paddles
     if (
         this.ball.x <= this.leftPaddle.x + this.paddleWidth &&
@@ -252,9 +256,6 @@ update() {
         this.leftScore++;
         this.resetBall();
     }
-
-    // Insere os emojis de rock de forma aleatória
-    this.addRockEmoji();
 }
   
   draw() {
