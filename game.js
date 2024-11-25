@@ -306,9 +306,9 @@ update() {
         this.leftPaddle.x,
         this.leftPaddle.y + this.paddleHeight - this.peddleCellSize / 2 // Final do paddle
         );
-        this.ctx.translate(0, (his.leftPaddle.y + this.paddleHeight - this.peddleCellSize / 2)); // Translate to the eye's position
-        this.ctx.scale(1, -1); // Flip vertically
-        this.ctx.translate(0, -(his.leftPaddle.y + this.paddleHeight - this.peddleCellSize / 2)); // Restore translation
+        //this.ctx.translate(0, (his.leftPaddle.y + this.paddleHeight - this.peddleCellSize / 2)); // Translate to the eye's position
+        //this.ctx.scale(1, -1); // Flip vertically
+        //this.ctx.translate(0, -(his.leftPaddle.y + this.paddleHeight - this.peddleCellSize / 2)); // Restore translation
     } 
     else if (this.leftPaddle.dy < 0) { // Movendo para cima
         this.ctx.fillText(
@@ -316,9 +316,9 @@ update() {
             this.leftPaddle.x,
             this.leftPaddle.y + this.peddleCellSize // Início do paddle
         );
-        this.ctx.translate(0, (this.leftPaddle.y + this.peddleCellSize)); // Translate to the eye's position
-        this.ctx.scale(1, -1); // Flip vertically
-        this.ctx.translate(0, -(this.leftPaddle.y + this.peddleCellSize)); // Restore translation
+        //this.ctx.translate(0, (this.leftPaddle.y + this.peddleCellSize)); // Translate to the eye's position
+        //this.ctx.scale(1, -1); // Flip vertically
+        //this.ctx.translate(0, -(this.leftPaddle.y + this.peddleCellSize)); // Restore translation
     }
 
     // Desenha o paddle esquerdo com electrified
