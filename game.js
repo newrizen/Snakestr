@@ -288,10 +288,10 @@ update() {
     const leftElectrifiedEmoji = CONFIG.ELECTRIFIED_EMOJI;
     const rightElectrifiedEmoji = CONFIG.ELECTRIFIED_EMOJI;
 
-    // Espelhar verticalmente o contexto
+    // Espelhar verticalmente o paddle
     this.ctx.translate(0, this.leftPaddle.y + this.paddleWidth / 2); // Centralizar no paddle
     this.ctx.scale(1, -1); // Espelhar verticalmente
-    this.ctx.translate(0, -(this.leftPaddle.y + this.paddleWidth / 2)); // Reverter a centralização
+    //this.ctx.translate(0, -(this.leftPaddle.y + this.paddleWidth / 2)); // Reverter a centralização
 
     // Draw left paddle as DEFAULT_EMOJI1
     for (let i = 0; i < this.paddleHeight / (this.peddleCellSize + 2) - 1; i++) { // 100/ (600/60 * 2)
@@ -311,9 +311,6 @@ update() {
         this.leftPaddle.x,
         this.leftPaddle.y + this.paddleHeight - this.peddleCellSize / 2 // Final do paddle
         );
-        //this.ctx.translate(0, (his.leftPaddle.y + this.paddleHeight - this.peddleCellSize / 2)); // Translate to the eye's position
-        //this.ctx.scale(1, -1); // Flip vertically
-        //this.ctx.translate(0, -(his.leftPaddle.y + this.paddleHeight - this.peddleCellSize / 2)); // Restore translation
     } 
     else if (this.leftPaddle.dy < 0) { // Movendo para cima
         this.ctx.fillText(
@@ -321,9 +318,6 @@ update() {
             this.leftPaddle.x,
             this.leftPaddle.y + this.peddleCellSize // Início do paddle
         );
-        //this.ctx.translate(0, (this.leftPaddle.y + this.peddleCellSize)); // Translate to the eye's position
-        //this.ctx.scale(1, -1); // Flip vertically
-        //this.ctx.translate(0, -(this.leftPaddle.y + this.peddleCellSize)); // Restore translation
     }
 
     // Desenha o paddle esquerdo com electrified
