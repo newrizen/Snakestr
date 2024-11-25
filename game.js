@@ -22,7 +22,7 @@ export class SnakeGame {
     this.ballSize = 18;
     this.eyeSize = 18;    
     //this.rockBlockSize = 18;
-    this.rocks = [];
+    //this.rocks = [];
   }
 
   showMenu() {
@@ -316,10 +316,12 @@ update() {
         this.leftPaddle.y + (2 + this.peddleCellSize + 3) * (i + 1) - 3 // spacingFactor
       );
     }
-    // Desenha o paddle esquerdo com os olhos
-    if (this.leftPaddle.dy > 0) { // Movendo para baixo
+
     const leftEyeEmoji = CONFIG.EYE_EMOJI;
     const rightEyeEmoji = CONFIG.EYE_EMOJI;
+    
+    // Desenha o paddle esquerdo com os olhos
+    if (this.leftPaddle.dy > 0) { // Movendo para baixo
 
     this.ctx.fillText(
         leftEyeEmoji,
