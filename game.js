@@ -28,7 +28,7 @@ export class SnakeGame {
   showMenu() {
     const menu = document.createElement("div");
     menu.id = "game-menu";
-    menu.style.position = "absolute";
+    //menu.style.position = "absolute";
     menu.style.top = "50%";
     menu.style.left = "50%";
     menu.style.transform = "translate(-50%, -50%)";
