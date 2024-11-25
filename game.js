@@ -157,7 +157,7 @@ update() {
     // Verifica colisão com a bola
     this.rocks = this.rocks.filter(rock => {
       
-        //const collidedX = 
+        const collidedX = 
           (this.ball.x < rock.x + rock.size && 
           this.ball.x + this.ballSize > rock.x && 
           this.ball.y + this.ballSize > rock.y) || 
