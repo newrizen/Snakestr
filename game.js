@@ -16,7 +16,7 @@ export class SnakeGame {
     this.isPaused = false;
     this.pauseMenu = document.getElementById("pause-menu");
 
-    this.paddleWidth = -20;
+    this.paddleWidth = 20;
     this.paddleHeight = 120;
     this.peddleCellSize = 18;
     this.ballSize = 18;
@@ -295,6 +295,9 @@ update() {
         this.leftPaddle.x,
         this.leftPaddle.y + (2 + this.peddleCellSize + 3) * (i + 1) - 3 // spacingFactor
       );
+        this.ctx.translate(0, this.leftPaddle.y + this.paddleWidth); // Translate to the eye's position
+        this.ctx.scale(1, -1); // Flip vertically
+        this.ctx.translate(0, -(this.leftPaddle.dx + this.paddleWidth)); // Restore translation
     }
     // Desenha o paddle esquerdo com os olhos
     if (this.leftPaddle.dy > 0) { // Movendo para baixo
