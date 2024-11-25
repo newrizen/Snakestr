@@ -136,10 +136,6 @@ export class SnakeGame {
 
   
 update() {
-    // Update paddle positions
-    this.leftPaddle.y += this.leftPaddle.dy;
-    this.rightPaddle.y += this.rightPaddle.dy;
-
     // Insere os emojis de rock de forma aleatória
     // Gera uma nova pedra em intervalos aleatórios
     //if (Math.random() < 0.001) { // 0.01 Ajuste a frequência de geração conforme necessário
@@ -196,7 +192,10 @@ update() {
       
         //return true; // Mantem a pedra
     //});
-
+  
+    // Update paddle positions
+    this.leftPaddle.y += this.leftPaddle.dy;
+    this.rightPaddle.y += this.rightPaddle.dy;
   
     // Lógica para o paddle automático
     if (this.playerSide === "left") {
@@ -303,11 +302,14 @@ update() {
     const leftElectrifiedEmoji = CONFIG.ELECTRIFIED_EMOJI;
     const rightElectrifiedEmoji = CONFIG.ELECTRIFIED_EMOJI;
 
+    const leftEyeEmoji = CONFIG.EYE_EMOJI;
+    const rightEyeEmoji = CONFIG.EYE_EMOJI;
+    
     // Espelhar verticalmente o paddle
     //this.ctx.translate(0, this.leftPaddle.y + this.paddleWidth / 2); // Centralizar no paddle
     //this.ctx.scale(1, -1); // Espelhar verticalmente
     //this.ctx.translate(0, -(this.leftPaddle.y + this.paddleWidth / 2)); // Reverter a centralização
-
+    
     // Draw left paddle as DEFAULT_EMOJI1
     for (let i = 0; i < this.paddleHeight / (this.peddleCellSize + 2) - 1; i++) { // 100/ (600/60 * 2)
       this.ctx.fillText(
@@ -316,18 +318,14 @@ update() {
         this.leftPaddle.y + (2 + this.peddleCellSize + 3) * (i + 1) - 3 // spacingFactor
       );
     }
-
-    const leftEyeEmoji = CONFIG.EYE_EMOJI;
-    const rightEyeEmoji = CONFIG.EYE_EMOJI;
     
     // Desenha o paddle esquerdo com os olhos
     if (this.leftPaddle.dy > 0) { // Movendo para baixo
-
-    this.ctx.fillText(
-        leftEyeEmoji,
-        this.leftPaddle.x,
-        this.leftPaddle.y + this.paddleHeight - this.peddleCellSize / 2 // Final do paddle
-        );
+      this.ctx.fillText(
+          leftEyeEmoji,
+          this.leftPaddle.x,
+          this.leftPaddle.y + this.paddleHeight - this.peddleCellSize / 2 // Final do paddle
+          );
     } 
     else if (this.leftPaddle.dy < 0) { // Movendo para cima
         this.ctx.fillText(
