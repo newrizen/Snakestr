@@ -196,6 +196,10 @@ update() {
     // Update paddle positions
     this.leftPaddle.y += this.leftPaddle.dy;
     this.rightPaddle.y += this.rightPaddle.dy;
+
+    // Prevent paddles from moving out of bounds
+    this.leftPaddle.y = Math.max(0, Math.min(this.canvas.height - this.paddleHeight, this.leftPaddle.y));
+    this.rightPaddle.y = Math.max(0, Math.min(this.canvas.height - this.paddleHeight, this.rightPaddle.y));
   
     // Lógica para o paddle automático
     if (this.playerSide === "left") {
@@ -218,13 +222,20 @@ update() {
         }
     }
 
-    // Prevent paddles from moving out of bounds
-    this.leftPaddle.y = Math.max(0, Math.min(this.canvas.height - this.paddleHeight, this.leftPaddle.y));
-    this.rightPaddle.y = Math.max(0, Math.min(this.canvas.height - this.paddleHeight, this.rightPaddle.y));
-
     // Update ball position
     this.ball.x += this.ball.dx;
     this.ball.y += this.ball.dy;
+
+      // Check if a point is scored
+    if (this.ball.x <= 0) {
+        this.rightScore++;
+        this.resetBall();
+    }
+
+    if (this.ball.x + this.ballSize >= this.canvas.width) {
+        this.leftScore++;
+        this.resetBall();
+    }
 
     // Ball collision with top and bottom walls
     if (this.ball.y <= 0 || this.ball.y + this.ballSize >= this.canvas.height) {
@@ -273,23 +284,22 @@ update() {
         this.rightPaddle.electrified = true;
         setTimeout(() => this.rightPaddle.electrified = false, 2000); // Dura 2 segundos
     }
-
-    // Check if a point is scored
-    if (this.ball.x <= 0) {
-        this.rightScore++;
-        this.resetBall();
-    }
-
-    if (this.ball.x + this.ballSize >= this.canvas.width) {
-        this.leftScore++;
-        this.resetBall();
-    }
 }
   
   draw() {
     // Clear the canvas
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
+    // Draw scores
+    this.ctx.font = "20px Arial";
+    this.ctx.fillText(`Left: ${this.leftScore}`, 10, 20);
+    this.ctx.fillText(`Right: ${this.rightScore}`, this.canvas.width - 100, 20);
+
+    // Desenha as pedras
+    //this.rocks.forEach(rock => {
+    //    this.ctx.fillText(CONFIG.ROCK_EMOJI, rock.x, rock.y); // Emoji de pedra
+    //});
+    
     // Adicionar emoji ao final/início do paddle esquerdo e direito
     const leftEyeEmoji = CONFIG.EYE_EMOJI;
     const rightEyeEmoji = CONFIG.EYE_EMOJI;
@@ -381,6 +391,13 @@ update() {
 
     // Draw ball with horizontal flip if moving right
     this.ctx.save(); // Save the current canvas state
+
+    // Draw ball as BOMB_EMOJI
+    this.ctx.fillText(
+      CONFIG.BOMB_EMOJI,
+      this.ball.x - 3,
+      this.ball.y + this.ballSize * 5 / 6
+    );
   
     if (this.ball.dx > 0) {
       this.ctx.translate(this.ball.x + this.ballSize / 2, 0); // Translate to ball's position
@@ -401,23 +418,6 @@ update() {
       this.ctx.scale(-1, 1); // Espelhar horizontalmente
       this.ctx.translate(-(this.ball.x + this.ballSize / 2), 0); // Restaurar a posição
     }
-
-    // Draw ball as BOMB_EMOJI
-    this.ctx.fillText(
-      CONFIG.BOMB_EMOJI,
-      this.ball.x - 3,
-      this.ball.y + this.ballSize * 5 / 6
-    );
-
-    // Desenha as pedras
-    //this.rocks.forEach(rock => {
-    //    this.ctx.fillText(CONFIG.ROCK_EMOJI, rock.x, rock.y); // Emoji de pedra
-    //});
-
-    // Draw scores
-    this.ctx.font = "20px Arial";
-    this.ctx.fillText(`Left: ${this.leftScore}`, 10, 20);
-    this.ctx.fillText(`Right: ${this.rightScore}`, this.canvas.width - 100, 20);
 
     this.ctx.restore(); // Restore the original canvas state
   }
