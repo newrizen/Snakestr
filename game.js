@@ -234,48 +234,44 @@ update() {
     // Ball collision with paddles
     if (
         this.ball.x <= this.leftPaddle.x + this.paddleWidth &&
+        this.ball.x + this.ballSize >= this.leftPaddle.x &&
         this.ball.y + this.ballSize >= this.leftPaddle.y &&
         this.ball.y <= this.leftPaddle.y + this.paddleHeight
     ) {
         this.ball.dx *= -1;
-      
-      // Ativa o electrified no paddle esquerdo
-      this.leftPaddle.electrified = true;
-      setTimeout(() => this.leftPaddle.electrified = false, 2000); // Dura 2 segundos
+        // Ativa o electrified no paddle esquerdo
+        this.leftPaddle.electrified = true;
+        setTimeout(() => this.leftPaddle.electrified = false, 2000); // Dura 2 segundos
     }
     else if (
-        this.ball.x <= this.leftPaddle.x + this.paddleWidth &&
-        this.ball.y + this.ballSize >= this.leftPaddle.y &&
-        this.ball.y <= this.leftPaddle.y + this.paddleHeight
+        this.ball.x <= this.leftPaddle.x + this.paddleWidth || 
+        this.ball.x + this.ballSize >= this.leftPaddle.x;
     ) {
         this.ball.dy *= -1;
-      
-      // Ativa o electrified no paddle esquerdo
-      this.leftPaddle.electrified = true;
-      setTimeout(() => this.leftPaddle.electrified = false, 2000); // Dura 2 segundos
+        // Ativa o electrified no paddle esquerdo
+        this.leftPaddle.electrified = true;
+        setTimeout(() => this.leftPaddle.electrified = false, 2000); // Dura 2 segundos
     }
 
     if (
+        this.ball.x <= this.rightPaddle.x + this.paddleWidth &&
         this.ball.x + this.ballSize >= this.rightPaddle.x &&
         this.ball.y + this.ballSize >= this.rightPaddle.y &&
         this.ball.y <= this.rightPaddle.y + this.paddleHeight
     ) {
         this.ball.dx *= -1;
-      
-      // Ativa o electrified no paddle esquerdo
-      this.leftPaddle.electrified = true;
-      setTimeout(() => this.leftPaddle.electrified = false, 2000); // Dura 2 segundos
+        // Ativa o electrified no paddle direito
+        this.leftPaddle.electrified = true;
+        setTimeout(() => this.leftPaddle.electrified = false, 2000); // Dura 2 segundos
     }
     else if (
-        //this.ball.x + this.ballSize >= this.rightPaddle.x &&
-        this.ball.y + this.ballSize >= this.rightPaddle.y &&
-        this.ball.y <= this.rightPaddle.y + this.paddleHeight
+        this.ball.x <= this.rightPaddle.x + this.paddleWidth || 
+        this.ball.x + this.ballSize >= this.rightPaddle.x;
     ) {
         this.ball.dy *= -1;
-
-      // Ativa o electrified no paddle direito
-      this.rightPaddle.electrified = true;
-      setTimeout(() => this.rightPaddle.electrified = false, 2000); // Dura 2 segundos
+        // Ativa o electrified no paddle direito
+        this.rightPaddle.electrified = true;
+        setTimeout(() => this.rightPaddle.electrified = false, 2000); // Dura 2 segundos
     }
 
     // Check if a point is scored
@@ -301,9 +297,6 @@ update() {
     // Adicionar emoji ao final/início do paddle esquerdo
     const leftElectrifiedEmoji = CONFIG.ELECTRIFIED_EMOJI;
     const rightElectrifiedEmoji = CONFIG.ELECTRIFIED_EMOJI;
-
-    const leftEyeEmoji = CONFIG.EYE_EMOJI;
-    const rightEyeEmoji = CONFIG.EYE_EMOJI;
     
     // Espelhar verticalmente o paddle
     //this.ctx.translate(0, this.leftPaddle.y + this.paddleWidth / 2); // Centralizar no paddle
@@ -382,7 +375,7 @@ update() {
       this.ctx.fillText(
         rightElectrifiedEmoji,
         this.rightPaddle.x - this.paddleWidth - 5,
-        this.rightPaddle.y + this.paddleHeight + 2// Na borda inferior do paddle
+        this.rightPaddle.y + this.paddleHeight + 2 // Na borda inferior do paddle
       );
     }
 
