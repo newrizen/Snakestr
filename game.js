@@ -20,6 +20,7 @@ export class SnakeGame {
     this.paddleHeight = 120;
     this.peddleCellSize = 18;
     this.ballSize = 18;
+    this.eyeSize = 18;    
     this.rockBlockSize = 18;
     this.rocks = [];
   }
@@ -282,6 +283,7 @@ update() {
     // Adicionar emoji ao final/início do paddle esquerdo e direito
     const leftEyeEmoji = CONFIG.EYE_EMOJI;
     const rightEyeEmoji = CONFIG.EYE_EMOJI;
+    
     // Adicionar emoji ao final/início do paddle esquerdo
     const leftElectrifiedEmoji = CONFIG.ELECTRIFIED_EMOJI;
     const rightElectrifiedEmoji = CONFIG.ELECTRIFIED_EMOJI;
@@ -296,21 +298,27 @@ update() {
     }
     // Desenha o paddle esquerdo com os olhos
     if (this.leftPaddle.dy > 0) { // Movendo para baixo
+    const leftEyeEmoji = CONFIG.EYE_EMOJI;
+    const rightEyeEmoji = CONFIG.EYE_EMOJI;
+
     this.ctx.fillText(
         leftEyeEmoji,
         this.leftPaddle.x,
         this.leftPaddle.y + this.paddleHeight - this.peddleCellSize / 2 // Final do paddle
         );
-        //this.ctx.translate(this.eye.x + this.eyeSize / 2, 0); // Translate to ball's position
-        this.ctx.scale(-1, 1); // Flip horizontally
-    } else if (this.leftPaddle.dy < 0) { // Movendo para cima
+        this.ctx.translate(0, (his.leftPaddle.y + this.paddleHeight - this.peddleCellSize / 2)); // Translate to the eye's position
+        this.ctx.scale(1, -1); // Flip vertically
+        this.ctx.translate(0, -(his.leftPaddle.y + this.paddleHeight - this.peddleCellSize / 2))); // Restore translation
+    } 
+    else if (this.leftPaddle.dy < 0) { // Movendo para cima
         this.ctx.fillText(
             leftEyeEmoji,
             this.leftPaddle.x,
             this.leftPaddle.y + this.peddleCellSize // Início do paddle
         );
-        //this.ctx.translate(this.eye.x + this.eyeSize / 2, 0); // Translate to ball's position
-        this.ctx.scale(-1, 1); // Flip horizontally
+        this.ctx.translate(0, (this.leftPaddle.y + this.peddleCellSize)); // Translate to the eye's position
+        this.ctx.scale(1, -1); // Flip vertically
+        this.ctx.translate(0, -((this.leftPaddle.y + this.peddleCellSize))); // Restore translation
     }
 
     // Desenha o paddle esquerdo com electrified
