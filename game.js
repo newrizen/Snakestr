@@ -131,6 +131,7 @@ export class SnakeGame {
 
     this.update();
     this.draw();
+    requestAnimationFrame(gameLoop);
   }
 
   
