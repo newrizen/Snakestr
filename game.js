@@ -245,7 +245,7 @@ update() {
     }
     else if (
         this.ball.x <= this.leftPaddle.x + this.paddleWidth || 
-        this.ball.x + this.ballSize >= this.leftPaddle.x;
+        this.ball.x + this.ballSize >= this.leftPaddle.x
     ) {
         this.ball.dy *= -1;
         // Ativa o electrified no paddle esquerdo
@@ -266,7 +266,7 @@ update() {
     }
     else if (
         this.ball.x <= this.rightPaddle.x + this.paddleWidth || 
-        this.ball.x + this.ballSize >= this.rightPaddle.x;
+        this.ball.x + this.ballSize >= this.rightPaddle.x
     ) {
         this.ball.dy *= -1;
         // Ativa o electrified no paddle direito
