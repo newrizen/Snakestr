@@ -233,9 +233,9 @@ update() {
   
     // Ball collision with paddles
     if (
-        this.ball.x <= this.leftPaddle.x + this.paddleWidth //&&
-        //this.ball.y + this.ballSize >= this.leftPaddle.y &&
-        //this.ball.y <= this.leftPaddle.y + this.paddleHeight
+        this.ball.x <= this.leftPaddle.x + this.paddleWidth &&
+        this.ball.y + this.ballSize >= this.leftPaddle.y &&
+        this.ball.y <= this.leftPaddle.y + this.paddleHeight
     ) {
         this.ball.dx *= -1;
       
@@ -244,7 +244,7 @@ update() {
       setTimeout(() => this.leftPaddle.electrified = false, 2000); // Dura 2 segundos
     }
     else if (
-        //this.ball.x <= this.leftPaddle.x + this.paddleWidth &&
+        this.ball.x <= this.leftPaddle.x + this.paddleWidth &&
         this.ball.y + this.ballSize >= this.leftPaddle.y &&
         this.ball.y <= this.leftPaddle.y + this.paddleHeight
     ) {
@@ -256,9 +256,9 @@ update() {
     }
 
     if (
-        this.ball.x + this.ballSize >= this.rightPaddle.x //&&
-        //this.ball.y + this.ballSize >= this.rightPaddle.y &&
-        //this.ball.y <= this.rightPaddle.y + this.paddleHeight
+        this.ball.x + this.ballSize >= this.rightPaddle.x &&
+        this.ball.y + this.ballSize >= this.rightPaddle.y &&
+        this.ball.y <= this.rightPaddle.y + this.paddleHeight
     ) {
         this.ball.dx *= -1;
       
