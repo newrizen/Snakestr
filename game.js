@@ -300,17 +300,17 @@ update() {
         leftEyeEmoji,
         this.leftPaddle.x,
         this.leftPaddle.y + this.paddleHeight - this.peddleCellSize / 2 // Final do paddle
+        );
         //this.ctx.translate(this.eye.x + this.eyeSize / 2, 0); // Translate to ball's position
         this.ctx.scale(-1, 1); // Flip horizontally
-        );
     } else if (this.leftPaddle.dy < 0) { // Movendo para cima
         this.ctx.fillText(
             leftEyeEmoji,
             this.leftPaddle.x,
             this.leftPaddle.y + this.peddleCellSize // Início do paddle
-            //this.ctx.translate(this.eye.x + this.eyeSize / 2, 0); // Translate to ball's position
-            this.ctx.scale(-1, 1); // Flip horizontally
         );
+        //this.ctx.translate(this.eye.x + this.eyeSize / 2, 0); // Translate to ball's position
+        this.ctx.scale(-1, 1); // Flip horizontally
     }
 
     // Desenha o paddle esquerdo com electrified
