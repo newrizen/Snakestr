@@ -132,49 +132,6 @@ export class SnakeGame {
     this.draw();
   }
 
-addRockEmoji() {
-    // Gera uma nova pedra em intervalos aleatórios
-    if (Math.random() < 0.001) { // 0.01 Ajuste a frequência de geração conforme necessário
-        const randomX = Math.random() * (this.canvas.width * 2/3 - this.rockBlockSize) + this.canvas.width/6;
-        const randomY = Math.random() * (this.canvas.height - this.rockBlockSize);
-
-        this.rocks.push({
-            x: randomX,
-            y: randomY,
-            size: this.rockBlockSize,
-            spawnTime: performance.now()
-        });
-    }
-
-    // Remove pedras que excederam 30 segundos
-    const currentTime = performance.now();
-    this.rocks = this.rocks.filter(rock => currentTime - rock.spawnTime < 30000);
-
-    // Verifica colisão com a bola
-    this.rocks = this.rocks.filter(rock => {
-        const collidedX = this.ball.x < rock.x + rock.size && this.ball.x + this.ballSize > rock.x;
-        const collidedY = this.ball.y < rock.y + rock.size && this.ball.y + this.ballSize > rock.y;
-
-        if (collidedX && collidedY) {
-        // Inverte ambas as direções em caso de colisão total
-        this.ball.dx *= -1;
-        this.ball.dy *= -1;
-        return false; // Remove a rocha
-        }
-        else if (collidedX) {
-            // Ação quando a bola atinge a pedra (opcional)
-            this.ball.dx *= -1;
-            return false;  // Remove a pedra se colidida
-        }
-        else if (collidedY) {
-            // Ação quando a bola atinge a pedra (opcional)
-            this.ball.dy *= -1;
-            return false; // Remove a pedra se colidida
-        }
-      
-        return true; // Mantem a pedra
-    });
-}
   
 update() {
     // Update paddle positions
@@ -217,7 +174,47 @@ update() {
 
 
     // Insere os emojis de rock de forma aleatória
-    this.addRockEmoji();
+    // Gera uma nova pedra em intervalos aleatórios
+    if (Math.random() < 0.001) { // 0.01 Ajuste a frequência de geração conforme necessário
+        const randomX = Math.random() * (this.canvas.width * 2/3 - this.rockBlockSize) + this.canvas.width/6;
+        const randomY = Math.random() * (this.canvas.height - this.rockBlockSize);
+
+        this.rocks.push({
+            x: randomX,
+            y: randomY,
+            size: this.rockBlockSize,
+            spawnTime: performance.now()
+        });
+    }
+
+    // Remove pedras que excederam 30 segundos
+    const currentTime = performance.now();
+    this.rocks = this.rocks.filter(rock => currentTime - rock.spawnTime < 30000);
+
+    // Verifica colisão com a bola
+    this.rocks = this.rocks.filter(rock => {
+        const collidedX = this.ball.x < rock.x + rock.size && this.ball.x + this.ballSize > rock.x;
+        const collidedY = this.ball.y < rock.y + rock.size && this.ball.y + this.ballSize > rock.y;
+
+        if (collidedX && collidedY) {
+        // Inverte ambas as direções em caso de colisão total
+        this.ball.dx *= -1;
+        this.ball.dy *= -1;
+        return false; // Remove a rocha
+        }
+        else if (collidedX) {
+            // Ação quando a bola atinge a pedra (opcional)
+            this.ball.dx *= -1;
+            return false;  // Remove a pedra se colidida
+        }
+        else if (collidedY) {
+            // Ação quando a bola atinge a pedra (opcional)
+            this.ball.dy *= -1;
+            return false; // Remove a pedra se colidida
+        }
+      
+        return true; // Mantem a pedra
+    });
   
     // Ball collision with paddles
     if (
