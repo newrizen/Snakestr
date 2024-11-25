@@ -160,21 +160,19 @@ update() {
     // Verifica colisão com a bola
     this.rocks = this.rocks.filter(rock => {
       
-        const (collidedX = 
-          this.ball.x < rock.x + rock.size && 
+        const collidedX = 
+          (this.ball.x < rock.x + rock.size && 
           this.ball.x + this.ballSize > rock.x && 
           this.ball.y + this.ballSize > rock.y) || 
-          (collidedX = 
-          this.ball.x < rock.x + rock.size && 
+          (this.ball.x < rock.x + rock.size && 
           this.ball.x + this.ballSize > rock.x && 
           this.ball.y < rock.y + rock.size);
       
-        const (collidedY =
-          this.ball.y < rock.y + rock.size && 
+        const collidedY =
+          (this.ball.y < rock.y + rock.size && 
           this.ball.y + this.ballSize > rock.y && 
           this.ball.x < rock.x + rock.size) ||
-          (collidedY =
-          this.ball.y < rock.y + rock.size && 
+          (this.ball.y < rock.y + rock.size && 
           this.ball.y + this.ballSize > rock.y && 
           this.ball.x + this.ballSize > rock.x);
 
