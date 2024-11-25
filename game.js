@@ -287,7 +287,12 @@ update() {
     // Adicionar emoji ao final/início do paddle esquerdo
     const leftElectrifiedEmoji = CONFIG.ELECTRIFIED_EMOJI;
     const rightElectrifiedEmoji = CONFIG.ELECTRIFIED_EMOJI;
-    
+
+    // Espelhar verticalmente o contexto
+    this.ctx.translate(0, this.leftPaddle.y + this.paddleWidth / 2); // Centralizar no paddle
+    this.ctx.scale(1, -1); // Espelhar verticalmente
+    this.ctx.translate(0, -(this.leftPaddle.y + this.paddleWidth / 2)); // Reverter a centralização
+
     // Draw left paddle as DEFAULT_EMOJI1
     for (let i = 0; i < this.paddleHeight / (this.peddleCellSize + 2) - 1; i++) { // 100/ (600/60 * 2)
       this.ctx.fillText(
@@ -295,9 +300,6 @@ update() {
         this.leftPaddle.x,
         this.leftPaddle.y + (2 + this.peddleCellSize + 3) * (i + 1) - 3 // spacingFactor
       );
-        this.ctx.translate(0, this.leftPaddle.y + this.paddleWidth); // Translate to the eye's position
-        this.ctx.scale(1, -1); // Flip vertically
-        this.ctx.translate(0, -(this.leftPaddle.dx + this.paddleWidth)); // Restore translation
     }
     // Desenha o paddle esquerdo com os olhos
     if (this.leftPaddle.dy > 0) { // Movendo para baixo
