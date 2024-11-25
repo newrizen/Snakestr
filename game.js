@@ -187,9 +187,9 @@ update() {
         });
     }
 
-    // Remove pedras que excederam 30 segundos
+    // Remove pedras que excederam 10 segundos
     const currentTime = performance.now();
-    this.rocks = this.rocks.filter(rock => currentTime - rock.spawnTime < 30000);
+    this.rocks = this.rocks.filter(rock => currentTime - rock.spawnTime < 10000);
 
     // Verifica colisão com a bola
     this.rocks = this.rocks.filter(rock => {
@@ -300,12 +300,16 @@ update() {
         leftEyeEmoji,
         this.leftPaddle.x,
         this.leftPaddle.y + this.paddleHeight - this.peddleCellSize / 2 // Final do paddle
+        //this.ctx.translate(this.eye.x + this.eyeSize / 2, 0); // Translate to ball's position
+        this.ctx.scale(-1, 1); // Flip horizontally
         );
     } else if (this.leftPaddle.dy < 0) { // Movendo para cima
         this.ctx.fillText(
             leftEyeEmoji,
             this.leftPaddle.x,
             this.leftPaddle.y + this.peddleCellSize // Início do paddle
+            //this.ctx.translate(this.eye.x + this.eyeSize / 2, 0); // Translate to ball's position
+            this.ctx.scale(-1, 1); // Flip horizontally
         );
     }
 
