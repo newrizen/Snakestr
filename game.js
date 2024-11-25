@@ -295,6 +295,9 @@ update() {
         this.leftPaddle.x,
         this.leftPaddle.y + (2 + this.peddleCellSize + 3) * (i + 1) - 3 // spacingFactor
       );
+        this.ctx.translate(0, this.leftPaddle.y); // Translate to the eye's position
+        this.ctx.scale(1, -1); // Flip vertically
+        this.ctx.translate(0, -(this.leftPaddle.y)); // Restore translation
     }
     // Desenha o paddle esquerdo com os olhos
     if (this.leftPaddle.dy > 0) { // Movendo para baixo
