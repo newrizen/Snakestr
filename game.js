@@ -226,7 +226,7 @@ update() {
     this.ball.x += this.ball.dx;
     this.ball.y += this.ball.dy;
 
-      // Check if a point is scored
+    // Check if a point is scored
     if (this.ball.x <= 0) {
         this.rightScore++;
         this.resetBall();
@@ -243,14 +243,14 @@ update() {
     }
   
     // Ball collision with paddles
-    if (
-    this.ball.x >= this.leftPaddle.x + this.paddleWidth && // Bola atinge o lado direito do paddle
-    (
+    if (this.ball.x <= this.leftPaddle.x + this.paddleWidth && // Bola atinge o lado direito do paddle
+        (
         (this.ball.y <= this.leftPaddle.y + this.paddleHeight && 
          this.ball.y < this.leftPaddle.y + this.paddleHeight / 2) || // Parte superior
         (this.ball.y + this.ballSize <= this.leftPaddle.y &&
          this.ball.y > this.leftPaddle.y + this.paddleHeight / 2)    // Parte inferior
-    )) 
+        )
+       ) 
     {
         this.ball.dy *= -1;
         // Ativa o electrified no paddle esquerdo
