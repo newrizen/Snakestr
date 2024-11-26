@@ -270,7 +270,17 @@ update() {
         setTimeout(() => this.leftPaddle.electrified = false, 2000); // Dura 2 segundos
     }
 
-    if (
+    if (this.ball.x + this.ballSize >= this.rightPaddle.x && // Bola atinge o lado direito do paddle
+        (
+        (this.ball.y <= this.rightPaddle.y + this.paddleHeight && 
+         this.ball.y + this.ballSize > this.rightPaddle.y + this.paddleHeight) || // Parte superior
+        (this.ball.y + this.ballSize <= this.rightPaddle.y &&
+         this.ball.y >= this.rightPaddle.y + this.paddleHeight)    // Parte inferior
+        )
+       ) 
+    {
+      
+    else if (
         this.ball.x <= this.rightPaddle.x + this.paddleWidth &&
         this.ball.x + this.ballSize >= this.rightPaddle.x &&
         this.ball.y + this.ballSize >= this.rightPaddle.y &&
@@ -278,18 +288,9 @@ update() {
     ) {
         this.ball.dx *= -1;
         // Ativa o electrified no paddle direito
-        this.leftPaddle.electrified = true;
+        this.rightPaddle.electrified = true;
         setTimeout(() => this.leftPaddle.electrified = false, 2000); // Dura 2 segundos
     }
-    //else if (this.ball.x + this.ballSize >= this.leftPaddle.x && // Bola atinge o lado direito do paddle
-    //    (
-    //    (this.ball.y <= this.leftPaddle.y + this.paddleHeight && 
-    //     this.ball.y + this.ballSize > this.leftPaddle.y + this.paddleHeight) || // Parte superior
-    //    (this.ball.y + this.ballSize <= this.leftPaddle.y &&
-    //     this.ball.y >= this.leftPaddle.y + this.paddleHeight)    // Parte inferior
-    //    )
-    //   ) 
-    //{
 }
   
   draw() {
