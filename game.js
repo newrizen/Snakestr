@@ -182,8 +182,7 @@ update() {
           return false; // Remove a rocha
         }
         else if (collidedX) {
-          // Ação quando a bola atinge a pedra (opcional)
-          this.ball.dy *= -1;
+          // Ação quando a bola atinge a pedra (opcional) 
           this.ball.dx *= -1;
           return false;  // Remove a pedra se colidida
         }
