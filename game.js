@@ -138,7 +138,7 @@ export class SnakeGame {
 update() {
     // Insere os emojis de rock de forma aleatória
     // Gera uma nova pedra em intervalos aleatórios
-    if (Math.random() < 0.01) { // 0.01 Ajuste a frequência de geração conforme necessário
+    if (Math.random() < 0.1) { // 0.01 Ajuste a frequência de geração conforme necessário
         const randomX = Math.random() * (this.canvas.width * 2/3 - this.rockBlockSize) + this.canvas.width/6;
         const randomY = Math.random() * (this.canvas.height - this.rockBlockSize);
 
