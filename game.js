@@ -289,7 +289,7 @@ update() {
         this.ball.dx *= -1;
         // Ativa o electrified no paddle direito
         this.rightPaddle.electrified = true;
-        setTimeout(() => this.leftPaddle.electrified = false, 2000); // Dura 2 segundos
+        setTimeout(() => this.rightPaddle.electrified = false, 2000); // Dura 2 segundos
     }
 }
   
@@ -328,7 +328,6 @@ update() {
         this.leftPaddle.y + (2 + this.peddleCellSize + 3) * (i + 1) - 3 // spacingFactor
       );
     }
-    
     // Desenha o paddle esquerdo com os olhos
     if (this.leftPaddle.dy > 0) { // Movendo para baixo
       this.ctx.fillText(
@@ -344,7 +343,6 @@ update() {
             this.leftPaddle.y + this.peddleCellSize // Início do paddle
         );
     }
-
     // Desenha o paddle esquerdo com electrified
     if (this.leftPaddle.electrified) {
       this.ctx.fillText(
@@ -358,7 +356,6 @@ update() {
         this.leftPaddle.y + this.paddleHeight + 2 // Na borda inferior do paddle
       );
     }
-    
     // Draw right paddle as DEFAULT_EMOJI2
     for (let i = 0; i < this.paddleHeight / (this.peddleCellSize + 2) - 1; i++) {
       this.ctx.fillText(
@@ -381,7 +378,6 @@ update() {
             this.rightPaddle.y + this.peddleCellSize // Início do paddle
         );
     }
-    
     // Desenha o paddle direito com electrified
     if (this.rightPaddle.electrified) {
       this.ctx.fillText(
@@ -411,21 +407,18 @@ update() {
       this.ctx.scale(-1, 1); // Flip horizontally
       this.ctx.translate(-(this.ball.x + this.ballSize / 2), 0); // Restore translation
     }
-
     // Flip vertical if the ball is moving downward
     if (this.ball.dy < 0) {
       this.ctx.translate(0, this.ball.y + this.ballSize / 2); // Translate to the ball's position
       this.ctx.scale(1, -1); // Flip vertically
       this.ctx.translate(0, -(this.ball.y + this.ballSize / 2)); // Restore translation
     }
-
     // Inverter horizontalmente se for o emoji de explosão
     if (CONFIG.BOMB_EMOJI === CONFIG.EXPLOSION_EMOJI) {
       this.ctx.translate(this.ball.x + this.ballSize / 2, 0); // Mover o ponto de referência
       this.ctx.scale(-1, 1); // Espelhar horizontalmente
       this.ctx.translate(-(this.ball.x + this.ballSize / 2), 0); // Restaurar a posição
     }
-
     this.ctx.restore(); // Restore the original canvas state
   }
 
