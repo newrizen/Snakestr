@@ -252,7 +252,7 @@ update() {
         )
        ) 
     {
-        this.ball.dy *= -1;
+        this.ball.dx *= -1;
         // Ativa o electrified no paddle esquerdo
         this.leftPaddle.electrified = true;
         setTimeout(() => this.leftPaddle.electrified = false, 2000); // Dura 2 segundos
@@ -263,7 +263,7 @@ update() {
         this.ball.y + this.ballSize >= this.leftPaddle.y &&
         this.ball.y <= this.leftPaddle.y + this.paddleHeight   // Bola está acima da base do paddle
     ) {
-        this.ball.dx *= -1;
+        this.ball.dy *= -1;
         // Ativa o electrified no paddle esquerdo
         this.leftPaddle.electrified = true;
         setTimeout(() => this.leftPaddle.electrified = false, 2000); // Dura 2 segundos
