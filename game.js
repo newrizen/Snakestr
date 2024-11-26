@@ -244,20 +244,21 @@ update() {
   
     // Ball collision with paddles
     if (
-        this.ball.x <= this.leftPaddle.x + this.paddleWidth && // Bola atinge o lado direito do paddle
-        this.ball.y + this.ballSize >= this.leftPaddle.y &&    // Bola está abaixo do topo do paddle
-        this.ball.y <= this.leftPaddle.y + this.paddleHeight   // Bola está acima da base do paddle
+        this.ball.x = this.leftPaddle.x + this.paddleWidth && this.ball.x <= this.leftPaddle.x + this.paddleWidth * 5/6  // Bola atinge o lado direito do paddle
+        || this.ball.x + this.ballSize = this.leftPaddle.x && this.ball.x <= this.leftPaddle.x + this.paddleWidth * 5/6  // Bola está abaixo do topo do paddle
     ) {
-        this.ball.dx *= -1;
+        this.ball.dy *= -1;
         // Ativa o electrified no paddle esquerdo
         this.leftPaddle.electrified = true;
         setTimeout(() => this.leftPaddle.electrified = false, 2000); // Dura 2 segundos
     }
     else if (
-        this.ball.x <= this.leftPaddle.x + this.paddleWidth || 
-        this.ball.x + this.ballSize >= this.leftPaddle.x
+        this.ball.x <= this.leftPaddle.x + this.paddleWidth && // Bola atinge o lado direito do paddle
+        this.ball.x + this.ballSize >= this.leftPaddle.x &&    // Bola está abaixo do topo do paddle
+        this.ball.y + this.ballSize >= this.leftPaddle.y &&
+        this.ball.y <= this.leftPaddle.y + this.paddleHeight   // Bola está acima da base do paddle
     ) {
-        this.ball.dy *= -1;
+        this.ball.dx *= -1;
         // Ativa o electrified no paddle esquerdo
         this.leftPaddle.electrified = true;
         setTimeout(() => this.leftPaddle.electrified = false, 2000); // Dura 2 segundos
