@@ -373,15 +373,15 @@ update() {
     // Desenha o paddle direito com os olhos
     if (this.rightPaddle.dy > 0) { // Movendo para baixo
         this.ctx.fillText(
-            rightEyeEmoji,
-            this.rightPaddle.x - 5,
-            this.rightPaddle.y + this.paddleHeight - this.peddleCellSize / 2 // Final do paddle
+          rightEyeEmoji,
+          this.rightPaddle.x - 5,
+          this.rightPaddle.y + this.paddleHeight - this.peddleCellSize / 2 // Final do paddle
         );
     } else if (this.rightPaddle.dy < 0) { // Movendo para cima
         this.ctx.fillText(
-            rightEyeEmoji,
-            this.rightPaddle.x - 5,
-            this.rightPaddle.y + this.peddleCellSize // Início do paddle
+          rightEyeEmoji,
+          this.rightPaddle.x - 5,
+          this.rightPaddle.y + this.peddleCellSize // Início do paddle
         );
     }
     // Desenha o paddle direito com electrified
@@ -407,7 +407,6 @@ update() {
       this.ball.x - 3,
       this.ball.y + this.ballSize * 5 / 6
     );
-  
     if (this.ball.dx > 0) {
       this.ctx.translate(this.ball.x + this.ballSize / 2, 0); // Translate to ball's position
       this.ctx.scale(-1, 1); // Flip horizontally
