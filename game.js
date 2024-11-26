@@ -176,20 +176,21 @@ update() {
           //this.ball.x + this.ballSize > rock.x);
 
         if (collidedX && collidedY) {
-        // Inverte ambas as direções em caso de colisão total
-        this.ball.dx *= -1;
-        this.ball.dy *= -1;
-        return false; // Remove a rocha
+          // Inverte ambas as direções em caso de colisão total
+          this.ball.dx *= -1;
+          this.ball.dy *= -1;
+          return false; // Remove a rocha
         }
         else if (collidedX) {
-            // Ação quando a bola atinge a pedra (opcional)
-            this.ball.dy *= -1;
-            return false;  // Remove a pedra se colidida
+          // Ação quando a bola atinge a pedra (opcional)
+          this.ball.dy *= -1;
+          this.ball.dy *= -1;
+          return false;  // Remove a pedra se colidida
         }
         else if (collidedY) {
-            // Ação quando a bola atinge a pedra (opcional)
-            this.ball.dx *= -1;
-            return false; // Remove a pedra se colidida
+          // Ação quando a bola atinge a pedra (opcional)
+          this.ball.dx *= -1;
+          return false; // Remove a pedra se colidida
         }
       
         return true; // Mantem a pedra
