@@ -314,8 +314,8 @@ update() {
     // Desenha as pedras
     this.rocks.forEach(rock => {
         this.ctx.fillText(CONFIG.ROCK_EMOJI, rock.x, rock.y + rock.size); // Emoji de pedra
-        this.ctx.fillStyle = "gray"; // Cor ou estilo da pedra
-        this.ctx.fillRect(rock.x, rock.y, rock.size, rock.size);
+        //this.ctx.fillStyle = "gray"; // Cor ou estilo da pedra
+        //this.ctx.fillRect(rock.x, rock.y, rock.size, rock.size);
     });
     
     // Adicionar emoji ao final/início do paddle esquerdo e direito
@@ -403,7 +403,7 @@ update() {
       );
     }
 
-    if (this.ballSize == 18) {
+    //if (this.ballSize == 18) {
         // Draw ball with horizontal flip if moving right
         this.ctx.save(); // Save the current canvas state
     
@@ -431,7 +431,7 @@ update() {
           this.ctx.translate(-(this.ball.x + this.ballSize / 2), 0); // Restaurar a posição
         }
         this.ctx.restore(); // Restore the original canvas state
-    }
+    //}
   }
 
   resetBall() {
