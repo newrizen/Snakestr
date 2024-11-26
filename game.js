@@ -279,6 +279,12 @@ update() {
         )
        ) 
     {
+        this.ball.dx *= -1;
+        this.ball.dy *= -1;
+        // Ativa o electrified no paddle direito
+        this.rightPaddle.electrified = true;
+        setTimeout(() => this.rightPaddle.electrified = false, 2000); // Dura 2 segundos
+    }
       
     else if (
         this.ball.x <= this.rightPaddle.x + this.paddleWidth &&
