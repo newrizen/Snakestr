@@ -245,8 +245,8 @@ update() {
     // Ball collision with paddles
     if (
         (this.ball.x = this.leftPaddle.x + this.paddleWidth &&      // Bola atinge o lado direito do paddle
-        this.ball.x <= this.leftPaddle.x + this.paddleWidth) 
-        || (this.ball.x + this.ballSize = this.leftPaddle.x &&      // Bola está abaixo do topo do paddle
+        this.ball.x <= this.leftPaddle.x + this.paddleWidth) ||
+        (this.ball.x + this.ballSize = this.leftPaddle.x &&      // Bola está abaixo do topo do paddle
         this.ball.x <= this.leftPaddle.x + this.paddleWidth)
     ) {
         this.ball.dy *= -1;
