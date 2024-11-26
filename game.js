@@ -313,7 +313,7 @@ update() {
 
     // Desenha as pedras
     this.rocks.forEach(rock => {
-        this.ctx.fillText(CONFIG.ROCK_EMOJI, rock.x, rock.y); // Emoji de pedra
+        this.ctx.fillText(CONFIG.ROCK_EMOJI, rock.x, rock.y + rock.size); // Emoji de pedra
         this.ctx.fillStyle = "gray"; // Cor ou estilo da pedra
         this.ctx.fillRect(rock.x, rock.y, rock.size, rock.size);
     });
