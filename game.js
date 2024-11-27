@@ -373,6 +373,30 @@ update() {
     //this.ctx.translate(0, this.leftPaddle.y + this.paddleWidth / 2); // Centralizar no paddle
     //this.ctx.scale(1, -1); // Espelhar verticalmente
     //this.ctx.translate(0, -(this.leftPaddle.y + this.paddleWidth / 2)); // Reverter a centralização
+
+    if (leftEmoji) {
+      this.ctx.save(); // Salvar estado inicial do contexto
+
+      if (this.leftPaddle.dy != 0) {
+        this.ctx.translate(this.leftPaddle.x + this.paddleWidth / 2, 0); // Move the reference point
+        this.ctx.scale(-1, 1); // Flip horizontally
+        this.ctx.translate(-(this.leftPaddle.x + this.paddleWidth / 2), 0); // Restore position
+        }
+        
+        this.ctx.restore(); // Restaurar o estado original do contexto
+    }
+
+    if (leftEyeEmoji) {
+      this.ctx.save(); // Salvar estado inicial do contexto
+
+      if (this.leftPaddle.dy != 0) {
+        this.ctx.translate(this.leftPaddle.x + this.eyeSize / 2, 0); // Move the reference point
+        this.ctx.scale(-1, 1); // Flip horizontally
+        this.ctx.translate(-(this.leftPaddle.x + this.eyeSize / 2), 0); // Restore position
+      }
+      
+      this.ctx.restore(); // Restaurar o estado original do contexto
+    }
     
     // Draw left paddle as DEFAULT_EMOJI1
     for (let i = 0; i < this.paddleHeight / (this.peddleCellSize + 2) - 1; i++) { // 100/ (600/60 * 2)
@@ -397,31 +421,6 @@ update() {
             this.leftPaddle.x,
             this.leftPaddle.y + this.peddleCellSize // Início do paddle
         );
-    }
-
-    
-    if (leftEmoji) {
-      this.ctx.save(); // Salvar estado inicial do contexto
-
-      if (this.leftPaddle.dy != 0) {
-      this.ctx.translate(this.leftPaddle.x + this.paddleWidth / 2, 0); // Move the reference point
-      this.ctx.scale(-1, 1); // Flip horizontally
-      this.ctx.translate(-(this.leftPaddle.x + this.paddleWidth / 2), 0); // Restore position
-      }
-      
-      this.ctx.restore(); // Restaurar o estado original do contexto
-    }
-
-    if (leftEyeEmoji) {
-      this.ctx.save(); // Salvar estado inicial do contexto
-
-      if (this.leftPaddle.dy != 0) {
-      this.ctx.translate(this.leftPaddle.x + this.eyeSize / 2, 0); // Move the reference point
-      this.ctx.scale(-1, 1); // Flip horizontally
-      this.ctx.translate(-(this.leftPaddle.x + this.eyeSize / 2), 0); // Restore position
-      }
-      
-      this.ctx.restore(); // Restaurar o estado original do contexto
     }
     
     // Desenha o paddle esquerdo com electrified
