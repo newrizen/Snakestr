@@ -377,7 +377,7 @@ update() {
     if (leftEmoji) {
       this.ctx.save(); // Salvar estado inicial do contexto
 
-      if (this.leftPaddle.dy != 0) {
+      if (this.leftPaddle.dy > 0) {
         this.ctx.translate(this.leftPaddle.x + this.paddleWidth / 2, 0); // Move the reference point
         this.ctx.scale(-1, 1); // Flip horizontally
         this.ctx.translate(-(this.leftPaddle.x + this.paddleWidth / 2), 0); // Restore position
@@ -389,7 +389,7 @@ update() {
     if (leftEyeEmoji) {
       this.ctx.save(); // Salvar estado inicial do contexto
 
-      if (this.leftPaddle.dy != 0) {
+      if (this.leftPaddle.dy > 0) {
         this.ctx.translate(this.leftPaddle.x + this.eyeSize / 2, 0); // Move the reference point
         this.ctx.scale(-1, 1); // Flip horizontally
         this.ctx.translate(-(this.leftPaddle.x + this.eyeSize / 2), 0); // Restore position
