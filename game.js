@@ -324,29 +324,35 @@ update() {
       this.ball.y + this.ballSize * 5 / 6
     );
     
-    //if (this.ball.dx != 0 && this.ball.dy != 0) {
-        // Draw ball with horizontal flip if moving right
-        this.ctx.save(); // Save the current canvas state
+    // Save the canvas state before drawing the ball
+    this.ctx.save();
     
-        if (this.ball.dx > 0) {
-          this.ctx.translate(this.ball.x + this.ballSize / 2, 0); // Translate to ball's position
-          this.ctx.scale(-1, 1); // Flip horizontally
-          this.ctx.translate(-(this.ball.x + this.ballSize / 2), 0); // Restore translation
-        }
-        // Flip vertical if the ball is moving downward
-        else if (this.ball.dy < 0) {
-          this.ctx.translate(0, this.ball.y + this.ballSize / 2); // Translate to the ball's position
-          this.ctx.scale(1, -1); // Flip vertically
-          this.ctx.translate(0, -(this.ball.y + this.ballSize / 2)); // Restore translation
-        }
-        // Inverter horizontalmente se for o emoji de explosão
-        if (CONFIG.BOMB_EMOJI === CONFIG.EXPLOSION_EMOJI) {
-          this.ctx.translate(this.ball.x + this.ballSize / 2, 0); // Mover o ponto de referência
-          this.ctx.scale(-1, 1); // Espelhar horizontalmente
-          this.ctx.translate(-(this.ball.x + this.ballSize / 2), 0); // Restaurar a posição
-        }
-        this.ctx.restore(); // Restore the original canvas state
-    //}
+    // Move to the ball's position for transformations
+    this.ctx.translate(this.ball.x, this.ball.y);
+    
+    // Apply transformations based on ball movement
+    if (this.ball.dx > 0) {
+      this.ctx.scale(-1, 1); // Flip horizontally if moving right
+    }
+    
+    if (this.ball.dy < 0) {
+      this.ctx.scale(1, -1); // Flip vertically if moving downward
+    }
+    
+    // Additional horizontal flip for explosion emoji
+    if (CONFIG.BOMB_EMOJI === CONFIG.EXPLOSION_EMOJI) {
+      this.ctx.scale(-1, 1); // Flip horizontally
+    }
+    
+    // Draw the ball as BOMB_EMOJI
+    //this.ctx.fillText(
+    //  CONFIG.BOMB_EMOJI,
+    //  -this.ballSize / 2, // Adjusted for the local coordinate system
+    //  this.ballSize / 2   // Adjusted for the local coordinate system
+    //);
+    
+    // Restore the canvas state after drawing the ball
+    this.ctx.restore();
     
     // Adicionar emoji ao final/início do paddle esquerdo e direito
     const leftEyeEmoji = CONFIG.EYE_EMOJI;
