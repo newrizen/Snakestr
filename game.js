@@ -373,6 +373,18 @@ update() {
     //this.ctx.translate(0, this.leftPaddle.y + this.paddleWidth / 2); // Centralizar no paddle
     //this.ctx.scale(1, -1); // Espelhar verticalmente
     //this.ctx.translate(0, -(this.leftPaddle.y + this.paddleWidth / 2)); // Reverter a centralização
+
+    if (leftEmoji) {
+      this.ctx.translate(this.ball.x + this.ballSize / 2, 0); // Move the reference point
+      this.ctx.scale(-1, 1); // Flip horizontally
+      this.ctx.translate(-(this.ball.x + this.ballSize / 2), 0); // Restore position
+    }
+
+    if (leftEyeEmoji) {
+      this.ctx.translate(this.ball.x + this.ballSize / 2, 0); // Move the reference point
+      this.ctx.scale(-1, 1); // Flip horizontally
+      this.ctx.translate(-(this.ball.x + this.ballSize / 2), 0); // Restore position
+    }
     
     // Draw left paddle as DEFAULT_EMOJI1
     for (let i = 0; i < this.paddleHeight / (this.peddleCellSize + 2) - 1; i++) { // 100/ (600/60 * 2)
@@ -381,12 +393,6 @@ update() {
         this.leftPaddle.x,
         this.leftPaddle.y + (2 + this.peddleCellSize + 3) * (i + 1) - 3 // spacingFactor
       );
-    }
-
-    if (leftEmoji || leftEyeEmoji) {
-      this.ctx.translate(this.ball.x + this.ballSize / 2, 0); // Move the reference point
-      this.ctx.scale(-1, 1); // Flip horizontally
-      this.ctx.translate(-(this.ball.x + this.ballSize / 2), 0); // Restore position
     }
     
     // Desenha o paddle esquerdo com os olhos
