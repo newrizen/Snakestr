@@ -375,15 +375,15 @@ update() {
     //this.ctx.translate(0, -(this.leftPaddle.y + this.paddleWidth / 2)); // Reverter a centralização
 
     if (leftEmoji) {
-      this.ctx.translate(this.ball.x + this.ballSize / 2, 0); // Move the reference point
+      this.ctx.translate(this.leftPaddle.x + this.paddleWidth / 2, 0); // Move the reference point
       this.ctx.scale(-1, 1); // Flip horizontally
-      this.ctx.translate(-(this.ball.x + this.ballSize / 2), 0); // Restore position
+      this.ctx.translate(-(this.leftPaddle.x + this.paddleWidth / 2), 0); // Restore position
     }
 
     if (leftEyeEmoji) {
-      this.ctx.translate(this.ball.x + this.ballSize / 2, 0); // Move the reference point
+      this.ctx.translate(this.leftPaddle.x + this.eyeSize / 2, 0); // Move the reference point
       this.ctx.scale(-1, 1); // Flip horizontally
-      this.ctx.translate(-(this.ball.x + this.ballSize / 2), 0); // Restore position
+      this.ctx.translate(-(this.leftPaddle.x + this.eyeSize / 2), 0); // Restore position
     }
     
     // Draw left paddle as DEFAULT_EMOJI1
