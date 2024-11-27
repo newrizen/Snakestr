@@ -413,7 +413,7 @@ update() {
       for (let i = 0; i < this.paddleHeight / (this.peddleCellSize + 2) - 1; i++) { // 100/ (600/60 * 2)
         this.ctx.fillText(
           leftEmoji,
-          this.leftPaddle.x,
+          this.leftPaddle.x - 5,
           this.leftPaddle.y + (2 + this.peddleCellSize + 3) * (i + 1) - 3 // spacingFactor
         );
       }
@@ -422,14 +422,14 @@ update() {
       if (this.leftPaddle.dy > 0) { // Movendo para baixo
         this.ctx.fillText(
             leftEyeEmoji,
-            this.leftPaddle.x,
+            this.leftPaddle.x - 5,
             this.leftPaddle.y + this.paddleHeight - this.peddleCellSize / 2 // Final do paddle
             );
       } 
       else if (this.leftPaddle.dy < 0) { // Movendo para cima
           this.ctx.fillText(
               leftEyeEmoji,
-              this.leftPaddle.x,
+              this.leftPaddle.x - 5,
               this.leftPaddle.y + this.peddleCellSize // Início do paddle
           );
       }
