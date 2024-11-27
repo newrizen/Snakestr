@@ -300,7 +300,7 @@ update() {
         setTimeout(() => this.rightPaddle.electrified = false, 2000); // Dura 2 segundos
     }
 
-          //if (this.ballSize == 18) {
+        if (this.ballSize === 18) {
         // Draw ball with horizontal flip if moving right
         this.ctx.save(); // Save the current canvas state
     
@@ -328,7 +328,7 @@ update() {
           this.ctx.translate(-(this.ball.x + this.ballSize / 2), 0); // Restaurar a posição
         }
         this.ctx.restore(); // Restore the original canvas state
-    //}
+    }
 }
   
   draw() {
