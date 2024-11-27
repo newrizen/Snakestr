@@ -317,16 +317,17 @@ update() {
         //this.ctx.fillRect(rock.x, rock.y, rock.size, rock.size);
     });
 
-    if (this.ballSize === 18) {
+    // Draw ball as BOMB_EMOJI
+    this.ctx.fillText(
+      CONFIG.BOMB_EMOJI,
+      this.ball.x - 3,
+      this.ball.y + this.ballSize * 5 / 6
+    );
+    
+    if (this.ball.dx != 0 && this.ball.dy != 0) {
         // Draw ball with horizontal flip if moving right
         this.ctx.save(); // Save the current canvas state
     
-        // Draw ball as BOMB_EMOJI
-        this.ctx.fillText(
-          CONFIG.BOMB_EMOJI,
-          this.ball.x - 3,
-          this.ball.y + this.ballSize * 5 / 6
-        );
         if (this.ball.dx > 0) {
           this.ctx.translate(this.ball.x + this.ballSize / 2, 0); // Translate to ball's position
           this.ctx.scale(-1, 1); // Flip horizontally
