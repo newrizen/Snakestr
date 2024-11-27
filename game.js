@@ -404,9 +404,9 @@ update() {
       }
       
       //if (this.leftPaddle.dy > 0) {
-        this.ctx.translate(this.leftPaddle.x + this.eyeSize / 2, 0); // Move the reference point
+        this.ctx.translate(this.leftPaddle.x + this.paddleWidth / 2, 0); // Move the reference point
         this.ctx.scale(-1, 1); // Flip horizontally
-        this.ctx.translate(-(this.leftPaddle.x + this.eyeSize / 2), 0); // Restore position
+        this.ctx.translate(-(this.leftPaddle.x + this.paddleWidth / 2), 0); // Restore position
       //}
 
       // Draw left paddle as DEFAULT_EMOJI1
