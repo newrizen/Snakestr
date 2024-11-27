@@ -316,43 +316,48 @@ update() {
         //this.ctx.fillStyle = "gray"; // Cor ou estilo da pedra
         //this.ctx.fillRect(rock.x, rock.y, rock.size, rock.size);
     });
-
-    // Draw ball as BOMB_EMOJI
-    this.ctx.fillText(
-      CONFIG.BOMB_EMOJI,
-      this.ball.x - 3,
-      this.ball.y + this.ballSize * 5 / 6
-    );
     
-    // Save the canvas state before drawing the ball
-    this.ctx.save();
+    // Check if the current emoji is CONFIG.BOMB_EMOJI
+    if (CONFIG.BOMB_EMOJI) {
+      this.ctx.save(); // Save the current canvas state
     
-    // Move to the ball's position for transformations
-    this.ctx.translate(this.ball.x, this.ball.y);
+      // Flip horizontally if the ball is moving to the right
+      if (this.ball.dx > 0) {
+        this.ctx.translate(this.ball.x + this.ballSize / 2, 0); // Translate to ball's position
+        this.ctx.scale(-1, 1); // Flip horizontally
+        this.ctx.translate(-(this.ball.x + this.ballSize / 2), 0); // Restore translation
+      }
     
-    // Apply transformations based on ball movement
-    if (this.ball.dx > 0) {
-      this.ctx.scale(-1, 1); // Flip horizontally if moving right
+      // Flip vertically if the ball is moving downward
+      if (this.ball.dy < 0) {
+        this.ctx.translate(0, this.ball.y + this.ballSize / 2); // Translate to the ball's position
+        this.ctx.scale(1, -1); // Flip vertically
+        this.ctx.translate(0, -(this.ball.y + this.ballSize / 2)); // Restore translation
+      }
+    
+      // Additional horizontal flip if the emoji is an explosion
+      if (CONFIG.BOMB_EMOJI === CONFIG.EXPLOSION_EMOJI) {
+        this.ctx.translate(this.ball.x + this.ballSize / 2, 0); // Move the reference point
+        this.ctx.scale(-1, 1); // Flip horizontally
+        this.ctx.translate(-(this.ball.x + this.ballSize / 2), 0); // Restore position
+      }
+    
+      // Draw the BOMB_EMOJI with transformations applied
+      this.ctx.fillText(
+        CONFIG.BOMB_EMOJI,
+        this.ball.x - 3,
+        this.ball.y + (this.ballSize * 5) / 6
+      );
+    
+      this.ctx.restore(); // Restore the original canvas state
+    } else {
+      // Draw the BOMB_EMOJI without transformations
+      this.ctx.fillText(
+        CONFIG.BOMB_EMOJI,
+        this.ball.x - 3,
+        this.ball.y + (this.ballSize * 5) / 6
+      );
     }
-    
-    if (this.ball.dy < 0) {
-      this.ctx.scale(1, -1); // Flip vertically if moving downward
-    }
-    
-    // Additional horizontal flip for explosion emoji
-    if (CONFIG.BOMB_EMOJI === CONFIG.EXPLOSION_EMOJI) {
-      this.ctx.scale(-1, 1); // Flip horizontally
-    }
-    
-    // Draw the ball as BOMB_EMOJI
-    //this.ctx.fillText(
-    //  CONFIG.BOMB_EMOJI,
-    //  -this.ballSize / 2, // Adjusted for the local coordinate system
-    //  this.ballSize / 2   // Adjusted for the local coordinate system
-    //);
-    
-    // Restore the canvas state after drawing the ball
-    this.ctx.restore();
     
     // Adicionar emoji ao final/início do paddle esquerdo e direito
     const leftEyeEmoji = CONFIG.EYE_EMOJI;
