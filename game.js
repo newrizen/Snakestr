@@ -258,7 +258,7 @@ update() {
         this.ball.dy *= -1;
         // Ativa o electrified no paddle esquerdo
         this.leftPaddle.electrified = true;
-        setTimeout(() => this.leftPaddle.electrified = false, 2000); // Dura 2 segundos
+        setTimeout(() => this.leftPaddle.electrified = false, 500); // Dura 2 segundos
     }
     else if (
         this.ball.x <= this.leftPaddle.x + this.paddleWidth && // Bola atinge o lado direito do paddle
@@ -269,7 +269,7 @@ update() {
         this.ball.dx *= -1;
         // Ativa o electrified no paddle esquerdo
         this.leftPaddle.electrified = true;
-        setTimeout(() => this.leftPaddle.electrified = false, 2000); // Dura 2 segundos
+        setTimeout(() => this.leftPaddle.electrified = false, 500); // Dura 2 segundos
     }
 
     if (this.ball.x + this.ballSize >= this.rightPaddle.x && // Bola atinge o lado direito do paddle
@@ -358,6 +358,8 @@ update() {
         this.ball.y + (this.ballSize * 5) / 6
       );
     }
+
+    const leftEmoji = CONFIG.DEFAULT_EMOJI1;
     
     // Adicionar emoji ao final/início do paddle esquerdo e direito
     const leftEyeEmoji = CONFIG.EYE_EMOJI;
@@ -375,11 +377,18 @@ update() {
     // Draw left paddle as DEFAULT_EMOJI1
     for (let i = 0; i < this.paddleHeight / (this.peddleCellSize + 2) - 1; i++) { // 100/ (600/60 * 2)
       this.ctx.fillText(
-        CONFIG.DEFAULT_EMOJI1,
+        leftEmoji,
         this.leftPaddle.x,
         this.leftPaddle.y + (2 + this.peddleCellSize + 3) * (i + 1) - 3 // spacingFactor
       );
     }
+
+    if (leftEmoji || leftEyeEmoji) {
+      this.ctx.translate(this.ball.x + this.ballSize / 2, 0); // Move the reference point
+      this.ctx.scale(-1, 1); // Flip horizontally
+      this.ctx.translate(-(this.ball.x + this.ballSize / 2), 0); // Restore position
+    }
+    
     // Desenha o paddle esquerdo com os olhos
     if (this.leftPaddle.dy > 0) { // Movendo para baixo
       this.ctx.fillText(
