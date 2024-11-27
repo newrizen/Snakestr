@@ -386,9 +386,23 @@ update() {
      //   this.ctx.restore(); // Restaurar o estado original do contexto
     //}
 
-    if (leftEyeEmoji) {
+    if (leftEmoji) {
       this.ctx.save(); // Salvar estado inicial do contexto
 
+      // Desenha o paddle esquerdo com electrified
+      if (this.leftPaddle.electrified) {
+        this.ctx.fillText(
+          leftElectrifiedEmoji,
+          this.leftPaddle.x + this.paddleWidth, // Centralizado no paddle
+          this.leftPaddle.y + 7 // Na borda superior do paddle
+        );
+        this.ctx.fillText(
+          leftElectrifiedEmoji,
+          this.leftPaddle.x + this.paddleWidth,
+          this.leftPaddle.y + this.paddleHeight + 2 // Na borda inferior do paddle
+        );
+      }
+      
       //if (this.leftPaddle.dy > 0) {
         this.ctx.translate(this.leftPaddle.x + this.eyeSize / 2, 0); // Move the reference point
         this.ctx.scale(-1, 1); // Flip horizontally
@@ -418,20 +432,6 @@ update() {
               this.leftPaddle.x,
               this.leftPaddle.y + this.peddleCellSize // Início do paddle
           );
-      }
-      
-      // Desenha o paddle esquerdo com electrified
-      if (this.leftPaddle.electrified) {
-        this.ctx.fillText(
-          leftElectrifiedEmoji,
-          this.leftPaddle.x + this.paddleWidth, // Centralizado no paddle
-          this.leftPaddle.y + 7 // Na borda superior do paddle
-        );
-        this.ctx.fillText(
-          leftElectrifiedEmoji,
-          this.leftPaddle.x + this.paddleWidth,
-          this.leftPaddle.y + this.paddleHeight + 2 // Na borda inferior do paddle
-        );
       }
       
       this.ctx.restore(); // Restaurar o estado original do contexto
