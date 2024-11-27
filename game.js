@@ -324,7 +324,7 @@ update() {
       this.ball.y + this.ballSize * 5 / 6
     );
     
-    if (this.ball.dx != 0 && this.ball.dy != 0) {
+    //if (this.ball.dx != 0 && this.ball.dy != 0) {
         // Draw ball with horizontal flip if moving right
         this.ctx.save(); // Save the current canvas state
     
@@ -334,7 +334,7 @@ update() {
           this.ctx.translate(-(this.ball.x + this.ballSize / 2), 0); // Restore translation
         }
         // Flip vertical if the ball is moving downward
-        if (this.ball.dy < 0) {
+        else if (this.ball.dy < 0) {
           this.ctx.translate(0, this.ball.y + this.ballSize / 2); // Translate to the ball's position
           this.ctx.scale(1, -1); // Flip vertically
           this.ctx.translate(0, -(this.ball.y + this.ballSize / 2)); // Restore translation
@@ -346,7 +346,7 @@ update() {
           this.ctx.translate(-(this.ball.x + this.ballSize / 2), 0); // Restaurar a posição
         }
         this.ctx.restore(); // Restore the original canvas state
-    }
+    //}
     
     // Adicionar emoji ao final/início do paddle esquerdo e direito
     const leftEyeEmoji = CONFIG.EYE_EMOJI;
