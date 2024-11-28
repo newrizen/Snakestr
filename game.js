@@ -231,11 +231,13 @@ update() {
     // Check if a point is scored
     if (this.ball.x <= 0) {
         this.rightScore++;
+        this.updateScoreDisplay(); // Atualiza o placar
         this.resetBall();
     }
 
     if (this.ball.x + this.ballSize >= this.canvas.width) {
         this.leftScore++;
+        this.updateScoreDisplay(); // Atualiza o placar
         this.resetBall();
     }
 
@@ -532,18 +534,6 @@ update() {
       this.ball.y = this.canvas.height / 2;
       this.ball.dx *= -1;
     }, 2000);
-
-    if (this.ball.x <= 0) {
-      this.rightScore++;
-      this.updateScoreDisplay(); // Atualiza o placar
-      this.resetBall();
-    }
-
-    if (this.ball.x + this.ballSize >= this.canvas.width) {
-        this.leftScore++;
-        this.updateScoreDisplay(); // Atualiza o placar
-        this.resetBall();
-    }
   }
 
   navigateToHighscores() {
