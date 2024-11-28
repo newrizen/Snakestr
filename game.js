@@ -232,7 +232,7 @@ update() {
     if (this.ball.x <= 0) {
         this.rightScore++;
         this.updateScoreDisplay(); // Atualiza o placar
-        this.onScoreUpdate(); // this.rightscore - this.leftscore Executa ações adicionais no evento de atualização do score
+        this.onScoreUpdate(this.score); // this.rightscore - this.leftscore Executa ações adicionais no evento de atualização do score
         this.resetBall();
     }
 
