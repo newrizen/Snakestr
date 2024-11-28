@@ -232,7 +232,7 @@ update() {
     if (this.ball.x <= 0) {
         this.rightScore++;
         this.updateScoreDisplay(); // Atualiza o placar
-        this.onScoreUpdate(this.score); // this.rightscore - this.leftscore Executa ações adicionais no evento de atualização do score
+        this.onScoreUpdate(this.rightScore - this.leftScore); // this.rightscore - this.leftscore Executa ações adicionais no evento de atualização do score
         this.resetBall();
     }
 
@@ -565,6 +565,6 @@ updateScoreDisplay() {
   
   onScoreUpdate(score) {
     // This method can be overridden from outside to handle score updates
-    console.log(`Score Updated: ${rightscore}`);
+    console.log(`Score Updated: ${score}`);
   }
 }
