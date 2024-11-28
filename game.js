@@ -562,6 +562,8 @@ updateScoreDisplay() {
     } else {
         console.error("Elementos do placar não encontrados no DOM.");
     }
+
+  console.log("Left Score:", this.leftScore, "Right Score:", this.rightScore);
 }
 
   onGameOver(score) {
