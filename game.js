@@ -239,7 +239,7 @@ update() {
     if (this.ball.x + this.ballSize >= this.canvas.width) {
         this.leftScore++;
         this.updateScoreDisplay(); // Atualiza o placar
-        //this.onScoreUpdate(this.score); // Executa ações adicionais no evento de atualização do score
+        this.onScoreUpdate(this.rightScore - this.leftScore); // Executa ações adicionais no evento de atualização do score
         this.resetBall();
     }
 
