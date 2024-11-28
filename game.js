@@ -532,6 +532,18 @@ update() {
       this.ball.y = this.canvas.height / 2;
       this.ball.dx *= -1;
     }, 2000);
+
+    if (this.ball.x <= 0) {
+      this.rightScore++;
+      this.updateScoreDisplay(); // Atualiza o placar
+      this.resetBall();
+    }
+
+    if (this.ball.x + this.ballSize >= this.canvas.width) {
+        this.leftScore++;
+        this.updateScoreDisplay(); // Atualiza o placar
+        this.resetBall();
+    }
   }
 
   navigateToHighscores() {
@@ -540,10 +552,17 @@ update() {
     window.location.href = "highscores.html";
   }
   
-  updateScoreDisplay() {
-    // This method should be implemented to update the score display in your UI
-    console.log(`Score: ${this.rightScore}`);
-  }
+updateScoreDisplay() {
+    const leftScoreElement = document.getElementById("left-score");
+    const rightScoreElement = document.getElementById("right-score");
+
+    if (leftScoreElement && rightScoreElement) {
+        leftScoreElement.textContent = this.leftScore;
+        rightScoreElement.textContent = this.rightScore;
+    } else {
+        console.error("Elementos do placar não encontrados no DOM.");
+    }
+}
 
   onGameOver(score) {
     // This method can be overridden from outside to handle game over events
