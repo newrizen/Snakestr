@@ -533,6 +533,12 @@ update() {
       this.ball.dx *= -1;
     }, 2000);
   }
+
+  navigateToHighscores() {
+    this.isPaused = false;
+    this.gameOver = true;
+    window.location.href = "highscores.html";
+  }
   
   updateScoreDisplay() {
     // This method should be implemented to update the score display in your UI
