@@ -68,8 +68,31 @@ export class SnakeGame {
   }
 
   reset() {
-    this.gameOver = false;
-    
+    try {
+      if (this.gameOver) {
+        this.onGameOver(this.score);
+        return;
+      }
+
+      this.gameLoopId = window.requestAnimationFrame(this.gameLoop.bind(this));
+
+      if (this.isPaused) {
+        return; // Don't update game state if paused
+      }
+
+      const secondsSinceLastRender = (currentTime - this.lastRenderTime) / 1000;
+      if (secondsSinceLastRender < 1 / CONFIG.TICK_RATE) return;
+
+      this.lastRenderTime = currentTime;
+
+      this.update();
+      this.draw();
+    }
+    catch (error) {
+      console.error("Error in game loop:", error);
+      this.gameOver = true;
+    }
+      
     this.leftPaddle = {
       x: 0,
       y: this.canvas.height / 2 - this.paddleHeight / 2,
