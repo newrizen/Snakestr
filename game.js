@@ -233,10 +233,10 @@ update() {
         this.rightScore++;
         this.updateScoreDisplay(); // Atualiza o placar
       if (this.playerSide === "left") {
-        this.onScoreUpdate(this.leftScore - this.rightScore);// Executa ações adicionais no evento de atualização do score
+        this.onScoreUpdate((this.leftScore - this.rightScore) * 10);// Executa ações adicionais no evento de atualização do score
       }
       else if (this.playerSide === "right") {
-        this.onScoreUpdate(this.rightScore - this.leftScore);// Executa ações adicionais no evento de atualização do score
+        this.onScoreUpdate((this.rightScore - this.leftScore) * 10);// Executa ações adicionais no evento de atualização do score
       }
         this.resetBall();
     }
@@ -245,10 +245,10 @@ update() {
         this.leftScore++;
         this.updateScoreDisplay(); // Atualiza o placar
       if (this.playerSide === "left") {
-        this.onScoreUpdate(this.leftScore - this.rightScore);// Executa ações adicionais no evento de atualização do score
+        this.onScoreUpdate((this.leftScore - this.rightScore) * 10);// Executa ações adicionais no evento de atualização do score
       }
       else if (this.playerSide === "right") {
-        this.onScoreUpdate(this.rightScore - this.leftScore);// Executa ações adicionais no evento de atualização do score
+        this.onScoreUpdate((this.rightScore - this.leftScore) * 10);// Executa ações adicionais no evento de atualização do score
       }
         this.resetBall();
     }
