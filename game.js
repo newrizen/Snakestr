@@ -68,12 +68,7 @@ export class SnakeGame {
   }
 
   reset() {
-    try {
-      if (this.gameOver) {
-        this.onGameOver(this.score);
-        return;
-      }
-    }
+    this.onGameOver(this.score);
       
     this.leftPaddle = {
       x: 0,
@@ -128,6 +123,13 @@ export class SnakeGame {
   }
 
   gameLoop(currentTime = 0) {
+    try{
+      if (this.gameOver) {
+        this.onGameOver(this.score);
+        return;
+      }
+    }
+    
     this.gameLoopId = window.requestAnimationFrame(this.gameLoop.bind(this));
     if (this.isPaused) return;
 
