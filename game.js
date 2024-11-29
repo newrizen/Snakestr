@@ -68,6 +68,8 @@ export class SnakeGame {
   }
 
   reset() {
+    this.gameOver = false;
+    
     this.leftPaddle = {
       x: 0,
       y: this.canvas.height / 2 - this.paddleHeight / 2,
@@ -136,6 +138,12 @@ export class SnakeGame {
 
   
 update() {
+    // Check win or loose by 10 score
+    if (this.leftScore == 10 || this.rightScore == 10) {
+      this.gameOver = true;
+      return;
+    }
+  
     // Insere os emojis de rock de forma aleatória
     // Gera uma nova pedra em intervalos aleatórios
     if (Math.random() < 0.02) { // 0.01 Ajuste a frequência de geração conforme necessário
