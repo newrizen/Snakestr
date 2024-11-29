@@ -68,7 +68,7 @@ export class SnakeGame {
   }
 
   reset() {
-    this.onGameOver(this.score);
+    //this.onGameOver(this.score);
       
     this.leftPaddle = {
       x: 0,
