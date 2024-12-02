@@ -123,23 +123,27 @@ export class PongGame {
   }
 
   gameLoop(currentTime = 0) {
-    //try{
-    //  if (this.gameOver) {
-    //    this.onGameOver(this.score);
-    //    return;
-    //  }
-    //}
-    
-    this.gameLoopId = window.requestAnimationFrame(this.gameLoop.bind(this));
-    if (this.isPaused) return;
-
-    const secondsSinceLastRender = (currentTime - this.lastRenderTime) / 1000;
-    if (secondsSinceLastRender < 1 / CONFIG.TICK_RATE) return;
-
-    this.lastRenderTime = currentTime;
-
-    this.update();
-    this.draw();
+    try {
+      if (this.gameOver) {
+        this.onGameOver(this.score);
+        return;
+      }
+      //}
+      
+      this.gameLoopId = window.requestAnimationFrame(this.gameLoop.bind(this));
+      if (this.isPaused) return;
+  
+      const secondsSinceLastRender = (currentTime - this.lastRenderTime) / 1000;
+      if (secondsSinceLastRender < 1 / CONFIG.TICK_RATE) return;
+  
+      this.lastRenderTime = currentTime;
+  
+      this.update();
+      this.draw();
+    } catch (error) {
+        console.error("Error in game loop:", error);
+        this.gameOver = true;
+    }
     //requestAnimationFrame(gameLoop);
   }
 
