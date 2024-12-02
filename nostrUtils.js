@@ -101,11 +101,11 @@ export class NostrClient {
             pubkey: npub,
             created_at: Math.floor(Date.now() / 1000),
             tags: [
-              ["t", "snakegame"],
+              ["t", "ponggame"],
               ["s", score.toString()],
               ["u", unlockedEmojis.join(",")],
             ],
-            content: `I scored ${score} in the snake game! #snakegame`,
+            content: `I scored ${score} in the pong game! #ponggame`,
           };
 
           // Sign the event using the window.nostr API
