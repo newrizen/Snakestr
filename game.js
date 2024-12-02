@@ -1,6 +1,6 @@
 import { CONFIG } from "./config.js";
 
-export class SnakeGame {
+export class PongGame {
   constructor(canvasId) {
     this.canvas = document.getElementById(canvasId);
     this.ctx = this.canvas.getContext("2d");
