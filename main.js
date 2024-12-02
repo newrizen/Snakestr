@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Initialization
   console.log("DOM fully loaded");
   const nostrClient = new NostrClient(CONFIG.WEBSOCKET_URL);
-  const game = new SnakeGame("game-canvas");
+  const game = new PongGame("game-canvas");
   let isOpen = false;
   let npub = null;
   let highscore = localStorage.getItem("highscore") || 0;
