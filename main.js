@@ -1,6 +1,6 @@
 import { CONFIG } from "./config.js";
 import { NostrClient } from "./nostrUtils.js";
-import { SnakeGame } from "./game.js";
+import { PongGame } from "./game.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   // Initialization
