@@ -7,7 +7,7 @@ export class PongGame {
     this.canvas.width = CONFIG.CANVAS_SIZE * 1.5;
     this.canvas.height = CONFIG.CANVAS_SIZE;
     this.cellSize = CONFIG.CANVAS_SIZE / CONFIG.GAME_SIZE;
-    this.playerSide = null; // Escolha do jogador "left" ou "right"
+    this.playerSide = null; // Choice "left" or "right" player
     this.reset();
     this.lastRenderTime = 0;
     this.gameLoopId = null;
@@ -23,8 +23,72 @@ export class PongGame {
     this.eyeSize = 18;    
     this.rockBlockSize = 18;
     this.rocks = [];
+
+    // Touch event handling
+    this.touchStartX = 0;
+    this.touchStartY = 0;
+    this.addTouchListeners();
+
+    // Keyboard event handling
+    window.addEventListener("keydown", this.handleKeydown.bind(this));
   }
 
+  addTouchListeners() {
+    this.canvas.addEventListener(
+      "touchstart",
+      this.handleTouchStart.bind(this),
+      { passive: false }
+    );
+    this.canvas.addEventListener("touchmove", this.handleTouchMove.bind(this), {
+      passive: false,
+    });
+    this.canvas.addEventListener("touchend", this.handleTouchEnd.bind(this), {
+      passive: false,
+    });
+  }
+  
+  handleTouchStart(event) {
+    event.preventDefault();
+    const touch = event.touches[0];
+    this.touchStartX = touch.clientX;
+    this.touchStartY = touch.clientY;
+  }
+
+
+  handleTouchMove(event) {
+    event.preventDefault();
+  }
+
+  
+  handleTouchEnd(event) {
+    event.preventDefault();
+    if (!this.touchStartX || !this.touchStartY) {
+      return;
+    }
+
+    const touch = event.changedTouches[0];
+    const touchEndX = touch.clientX;
+    const touchEndY = touch.clientY;
+
+    const dx = touchEndX - this.touchStartX;
+    const dy = touchEndY - this.touchStartY;
+
+    // Minimum swipe distance to trigger direction change
+    const minSwipeDistance = 30;
+
+    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > minSwipeDistance) {
+      // Horizontal swipe
+      this.changeDirection(dx > 0 ? "ArrowRight" : "ArrowLeft");
+    } else if (Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > minSwipeDistance) {
+      // Vertical swipe
+      this.changeDirection(dy > 0 ? "ArrowDown" : "ArrowUp");
+    }
+
+    // Reset touch start coordinates
+    this.touchStartX = 0;
+    this.touchStartY = 0;
+  }
+  
   showMenu() {
     const menu = document.createElement("div");
     menu.id = "game-menu";
@@ -128,7 +192,6 @@ export class PongGame {
         this.onGameOver(this.score);
         return;
       }
-      //}
       
       this.gameLoopId = window.requestAnimationFrame(this.gameLoop.bind(this));
       if (this.isPaused) return;
@@ -155,8 +218,7 @@ update() {
       return;
     }
   
-    // Insere os emojis de rock de forma aleatória
-    // Gera uma nova pedra em intervalos aleatórios
+    // Insere um novo emoji de pedra em intervalos aleatórios
     if (Math.random() < 0.02) { // 0.01 Ajuste a frequência de geração conforme necessário
         const randomX = Math.random() * (this.canvas.width * 1/2 - this.rockBlockSize) + this.canvas.width/4;
         const randomY = Math.random() * (this.canvas.height - this.rockBlockSize);
