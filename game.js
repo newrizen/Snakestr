@@ -27,66 +27,10 @@ export class PongGame {
     // Touch event handling
     this.touchStartX = 0;
     this.touchStartY = 0;
-    this.addTouchListeners();
+    //this.addTouchListeners();
 
     // Keyboard event handling
-    window.addEventListener("keydown", this.handleKeydown.bind(this));
-  }
-
-  addTouchListeners() {
-    this.canvas.addEventListener(
-      "touchstart",
-      this.handleTouchStart.bind(this),
-      { passive: false }
-    );
-    this.canvas.addEventListener("touchmove", this.handleTouchMove.bind(this), {
-      passive: false,
-    });
-    this.canvas.addEventListener("touchend", this.handleTouchEnd.bind(this), {
-      passive: false,
-    });
-  }
-  
-  handleTouchStart(event) {
-    event.preventDefault();
-    const touch = event.touches[0];
-    this.touchStartX = touch.clientX;
-    this.touchStartY = touch.clientY;
-  }
-
-
-  handleTouchMove(event) {
-    event.preventDefault();
-  }
-
-  
-  handleTouchEnd(event) {
-    event.preventDefault();
-    if (!this.touchStartX || !this.touchStartY) {
-      return;
-    }
-
-    const touch = event.changedTouches[0];
-    const touchEndX = touch.clientX;
-    const touchEndY = touch.clientY;
-
-    const dx = touchEndX - this.touchStartX;
-    const dy = touchEndY - this.touchStartY;
-
-    // Minimum swipe distance to trigger direction change
-    const minSwipeDistance = 30;
-
-    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > minSwipeDistance) {
-      // Horizontal swipe
-      this.changeDirection(dx > 0 ? "ArrowRight" : "ArrowLeft");
-    } else if (Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > minSwipeDistance) {
-      // Vertical swipe
-      this.changeDirection(dy > 0 ? "ArrowDown" : "ArrowUp");
-    }
-
-    // Reset touch start coordinates
-    this.touchStartX = 0;
-    this.touchStartY = 0;
+   // window.addEventListener("keydown", this.handleKeydown.bind(this));
   }
   
   showMenu() {
@@ -161,6 +105,63 @@ export class PongGame {
     window.addEventListener("keyup", (event) => this.stopPaddle(event));
   }
 
+  // Adicionado para touch
+  addTouchListeners() {
+    this.canvas.addEventListener(
+      "touchstart",
+      this.handleTouchStart.bind(this),
+      { passive: false }
+    );
+    this.canvas.addEventListener("touchmove", this.handleTouchMove.bind(this), {
+      passive: false,
+    });
+    this.canvas.addEventListener("touchend", this.handleTouchEnd.bind(this), {
+      passive: false,
+    });
+  }
+  
+  handleTouchStart(event) {
+    event.preventDefault();
+    const touch = event.touches[0];
+    this.touchStartX = touch.clientX;
+    this.touchStartY = touch.clientY;
+  }
+
+
+  handleTouchMove(event) {
+    event.preventDefault();
+  }
+
+  
+  handleTouchEnd(event) {
+    event.preventDefault();
+    if (!this.touchStartX || !this.touchStartY) {
+      return;
+    }
+
+    const touch = event.changedTouches[0];
+    const touchEndX = touch.clientX;
+    const touchEndY = touch.clientY;
+
+    const dx = touchEndX - this.touchStartX;
+    const dy = touchEndY - this.touchStartY;
+
+    // Minimum swipe distance to trigger direction change
+    const minSwipeDistance = 30;
+
+    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > minSwipeDistance) {
+      // Horizontal swipe
+      this.changeDirection(dx > 0 ? "ArrowRight" : "ArrowLeft");
+    } else if (Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > minSwipeDistance) {
+      // Vertical swipe
+      this.changeDirection(dy > 0 ? "ArrowDown" : "ArrowUp");
+    }
+
+    // Reset touch start coordinates
+    this.touchStartX = 0;
+    this.touchStartY = 0;
+  }
+  
   handlePlayerControls(event) {
     if (this.playerSide === "left") {
       if (event.key === "w") this.leftPaddle.dy = -CONFIG.PADDLE_SPEED;
