@@ -38,7 +38,7 @@ export class PongGame {
     menu.id = "game-menu";
     menu.style.position = "absolute";
     menu.style.top = "40%";
-    menu.style.left = "40%";
+    menu.style.left = "45%";
     menu.style.transform = "translate(-50%, -50%)";
     menu.style.backgroundColor = "#fff";
     menu.style.padding = "20px";
@@ -406,9 +406,9 @@ update() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
     // Draw scores
-    this.ctx.font = "50px Arial";
-    this.ctx.fillText(`${this.leftScore}`, 10, 20);
-    this.ctx.fillText(`${this.rightScore}`, this.canvas.width - 100, 20);
+    this.ctx.font = "20px Arial";
+    this.ctx.fillText(`${this.leftScore}`, 50, 20);
+    this.ctx.fillText(`${this.rightScore}`, this.canvas.width - 50, 20);
 
     // Desenha as pedras
     this.rocks.forEach(rock => {
