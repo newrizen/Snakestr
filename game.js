@@ -37,8 +37,8 @@ export class PongGame {
     const menu = document.createElement("div");
     menu.id = "game-menu";
     menu.style.position = "absolute";
-    menu.style.top = "50%";
-    menu.style.left = "50%";
+    menu.style.top = "25%";
+    menu.style.left = "25%";
     menu.style.transform = "translate(-50%, -50%)";
     menu.style.backgroundColor = "#fff";
     menu.style.padding = "20px";
@@ -46,18 +46,18 @@ export class PongGame {
     menu.style.textAlign = "center";
 
     const title = document.createElement("h2");
-    title.innerText = "Escolha o lado que você quer controlar";
+    title.innerText = "Choose which one you want to control";
     menu.appendChild(title);
 
     const leftButton = document.createElement("button");
-    leftButton.innerText = "Controle o Paddle Esquerdo (W/S)";
+    leftButton.innerText = "Left Paddle (W/S)";
     leftButton.onclick = () => {
       this.playerSide = "left";
       this.startGame(menu);
     };
 
     const rightButton = document.createElement("button");
-    rightButton.innerText = "Controle o Paddle Direito (↑/↓)";
+    rightButton.innerText = "Right Paddle (↑/↓)";
     rightButton.onclick = () => {
       this.playerSide = "right";
       this.startGame(menu);
@@ -66,6 +66,10 @@ export class PongGame {
     menu.appendChild(leftButton);
     menu.appendChild(rightButton);
 
+    const advice = document.createElement("h4");
+    advice.innerText = "The first one to get 10 points wins.";
+    menu.appendChild(advice);
+    
     document.body.appendChild(menu);
   }
 
