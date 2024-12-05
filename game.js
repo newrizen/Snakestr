@@ -38,7 +38,7 @@ export class PongGame {
     menu.id = "game-menu";
     menu.style.position = "absolute";
     menu.style.top = "40%";
-    menu.style.left = "47%";
+    menu.style.left = "46%";
     menu.style.transform = "translate(-50%, -50%)";
     menu.style.backgroundColor = "#fff";
     menu.style.padding = "20px";
@@ -407,8 +407,8 @@ update() {
 
     // Draw scores
     this.ctx.font = "50px Arial";
-    this.ctx.fillText(`${this.leftScore}`, 90, 20);
-    this.ctx.fillText(`${this.rightScore}`, this.canvas.width - 10, 20);
+    this.ctx.fillText(`${this.leftScore}`, 200, 50);
+    this.ctx.fillText(`${this.rightScore}`, this.canvas.width - 200, 50);
 
     this.ctx.font = "20px Arial";
     
