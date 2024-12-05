@@ -38,7 +38,7 @@ export class PongGame {
     menu.id = "game-menu";
     menu.style.position = "absolute";
     menu.style.top = "40%";
-    menu.style.left = "45%";
+    menu.style.left = "47%";
     menu.style.transform = "translate(-50%, -50%)";
     menu.style.backgroundColor = "#fff";
     menu.style.padding = "20px";
@@ -406,10 +406,12 @@ update() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
     // Draw scores
-    this.ctx.font = "20px Arial";
-    this.ctx.fillText(`${this.leftScore}`, 50, 20);
-    this.ctx.fillText(`${this.rightScore}`, this.canvas.width - 50, 20);
+    this.ctx.font = "50px Arial";
+    this.ctx.fillText(`${this.leftScore}`, 90, 20);
+    this.ctx.fillText(`${this.rightScore}`, this.canvas.width - 10, 20);
 
+    this.ctx.font = "20px Arial";
+    
     // Desenha as pedras
     this.rocks.forEach(rock => {
     this.ctx.fillText(CONFIG.ROCK_EMOJI, rock.x, rock.y + rock.size); // Emoji de pedra
